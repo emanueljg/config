@@ -185,7 +185,9 @@ in
                         paths = [
                           wrappedPkg
                         ];
-                        passthru.wrapped = wrappedPkg;
+                        passthru = {
+                          wrapped = wrappedPkg;
+                        };
                         postBuild = ''
                           ${wraps.config.preWrap}
 
@@ -197,6 +199,19 @@ in
                       }
                     ) { })
                     [
+                      (
+                        pkg:
+                        pkg.overrideAttrs (prev: {
+                          passthru = prev.passthru or { } // {
+                            image = pkgs.dockerTools.buildLayeredImage {
+                              inherit (wraps.config) name;
+                              tag = "latest";
+                              contents = [ pkg ];
+                              config.Cmd = [ "/bin/${prev.meta.mainProgram}" ];
+                            };
+                          };
+                        })
+                      )
                       (pkg: pkg.overrideAttrs (wraps.config.overrideAttrs))
                       (pkg: pkg.override (wraps.config.override))
                     ];

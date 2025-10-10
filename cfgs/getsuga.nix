@@ -50,6 +50,10 @@ in
       gamescope
       obs
 
+      # development
+      docker
+
+      # misc. fixes
       network-wait-online-fix
 
       stateversions."23-11"

@@ -29,8 +29,8 @@
     };
 
     # private
-    # vidya.url = "github:emanueljg/vidya";
-    vidya.url = "path:/home/ejg/dev/vidya";
+    vidya.url = "github:emanueljg/vidya";
+    # vidya.url = "path:/home/ejg/dev/vidya";
 
   };
 
