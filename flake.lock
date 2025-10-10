@@ -108,21 +108,6 @@
         "type": "github"
       }
     },
-    "hoyoget": {
-      "inputs": {
-        "nixpkgs": "nixpkgs_4"
-      },
-      "locked": {
-        "lastModified": 1753379780,
-        "narHash": "sha256-akqIaWEkNmHhOymcNYCiIyOsMxXTyC5FiNnh8T36rvY=",
-        "path": "/home/ejg/hoyoget",
-        "type": "path"
-      },
-      "original": {
-        "path": "/home/ejg/hoyoget",
-        "type": "path"
-      }
-    },
     "nix-alien": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -146,7 +131,7 @@
     "nix-gaming": {
       "inputs": {
         "flake-parts": "flake-parts_2",
-        "nixpkgs": "nixpkgs_5"
+        "nixpkgs": "nixpkgs_4"
       },
       "locked": {
         "lastModified": 1751508010,
@@ -310,22 +295,6 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1752687322,
-        "narHash": "sha256-RKwfXA4OZROjBTQAl9WOZQFm7L8Bo93FQwSJpAiSRvo=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "6e987485eb2c77e5dcc5af4e3c70843711ef9251",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_5": {
-      "locked": {
         "lastModified": 1750994206,
         "narHash": "sha256-3u6rEbIX9CN/5A5/mc3u0wIO1geZ0EhjvPBXmRDHqWM=",
         "owner": "NixOS",
@@ -340,7 +309,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_6": {
+    "nixpkgs_5": {
       "locked": {
         "lastModified": 1753250450,
         "narHash": "sha256-i+CQV2rPmP8wHxj0aq4siYyohHwVlsh40kV89f3nw1s=",
@@ -391,19 +360,21 @@
     "vidya": {
       "inputs": {
         "fetch-from-itch": "fetch-from-itch",
-        "hoyoget": "hoyoget",
         "nix-gaming": "nix-gaming",
-        "nixpkgs": "nixpkgs_6"
+        "nixpkgs": "nixpkgs_5"
       },
       "locked": {
-        "lastModified": 1756201767,
-        "narHash": "sha256-707pjjWOze+SjWhDyCiQl1zgOutvpKGqz2KKMjx1O3M=",
-        "path": "/home/ejg/dev/vidya",
-        "type": "path"
+        "lastModified": 1760111601,
+        "narHash": "sha256-olkjgu5ZZqg6F9IJJO/K5zFrBWsO1s14Ao2Cax+lPsg=",
+        "owner": "emanueljg",
+        "repo": "vidya",
+        "rev": "2a7ccc1935056b0efa094d2a19c1d6bb14a91f0c",
+        "type": "github"
       },
       "original": {
-        "path": "/home/ejg/dev/vidya",
-        "type": "path"
+        "owner": "emanueljg",
+        "repo": "vidya",
+        "type": "github"
       }
     }
   },
