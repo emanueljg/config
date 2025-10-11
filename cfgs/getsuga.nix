@@ -45,7 +45,6 @@ in
       nginx-localhost
 
       # gaming
-      vidya
       fetch-from-itch
       gamescope
       obs
