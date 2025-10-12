@@ -38,6 +38,7 @@
     { self, nixos-unstable, ... }@inputs:
     let
       inherit (nixos-unstable) lib;
+      systemPkgs = lib.getAttrs [ "x86_64-linux" ] nixos-unstable.legacyPackages;
     in
     {
       modules =
@@ -87,7 +88,22 @@
           )
         ) (builtins.readDir cfgDir);
 
-      nixosConfigurations = builtins.mapAttrs (_: v: lib.nixosSystem v) self.configs;
-      formatter = builtins.mapAttrs (_: pkgs: pkgs.nixfmt-rfc-style) nixos-unstable.legacyPackages;
+      packages = builtins.mapAttrs (
+        system: pkgs:
+        lib.concatMapAttrs (
+          hostName: cfg:
+          lib.mapAttrs' (
+            n: v: lib.nameValuePair ("${hostName}-${n}") (v.finalPackage.passthru.image)
+          ) cfg.config.local.wrap.wraps
+        ) self.nixosConfigurations
+      ) systemPkgs;
+
+      nixosConfigurations =
+        builtins.removeAttrs (builtins.mapAttrs (_: v: lib.nixosSystem v) self.configs)
+          [
+            "base"
+            "pc"
+          ];
+      formatter = builtins.mapAttrs (_: pkgs: pkgs.nixfmt-rfc-style) systemPkgs;
     };
 }

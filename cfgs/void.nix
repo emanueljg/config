@@ -13,7 +13,7 @@ in
 
   system = "x86_64-linux";
 
-  specialArgs = lib.recursiveUpdate parent {
+  specialArgs = lib.recursiveUpdate parent.specialArgs {
     nixosModules = {
       archiver = inputs.archiver.nixosModules.default;
     };
