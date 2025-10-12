@@ -1,4 +1,4 @@
-{ lib, nixpkgs', ... }:
+{ lib, pkgs, ... }:
 {
   hardware.nvidia.open = lib.mkForce false;
 
@@ -11,7 +11,7 @@
 
   # required for https://github.com/ankenyr/jellyfin-youtube-metadata-plugin
   systemd.services.jellyfin.path = [
-    nixpkgs'.nixos-unstable.yt-dlp
+    pkgs.yt-dlp
   ];
 
   # virtualisation = {
