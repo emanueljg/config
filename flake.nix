@@ -28,10 +28,6 @@
       # inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # private
-    vidya.url = "github:emanueljg/vidya";
-    # vidya.url = "path:/home/ejg/dev/vidya";
-
   };
 
   outputs =
