@@ -9,33 +9,6 @@ let
 
   cfg = config.local.cursor;
 
-  pointerCursorModule = lib.types.submodule {
-    options = {
-      enable = lib.mkEnableOption "cursor config generation";
-
-      package = lib.mkOption {
-        type = lib.types.package;
-      };
-
-      name = lib.mkOption {
-        type = lib.types.str;
-      };
-
-      size = lib.mkOption {
-        type = lib.types.int;
-        default = 32;
-      };
-
-      gtk.enable = lib.mkEnableOption "";
-
-      dotIcons.enable = (lib.mkEnableOption "") // {
-        default = true;
-      };
-
-      hyprcursor.enable = lib.mkEnableOption "hyprcursor config generation";
-    };
-  };
-
   defaultIndexThemePackage = pkgs.writeTextFile {
     name = "index.theme";
     destination = "/share/icons/default/index.theme";
@@ -52,9 +25,29 @@ let
 
 in
 {
-  options.local.cursor = lib.mkOption {
-    type = lib.types.nullOr pointerCursorModule;
-    default = null;
+  options.local.cursor = {
+    enable = lib.mkEnableOption "cursor config generation";
+
+    package = lib.mkOption {
+      type = lib.types.package;
+    };
+
+    name = lib.mkOption {
+      type = lib.types.str;
+    };
+
+    size = lib.mkOption {
+      type = lib.types.int;
+      default = 32;
+    };
+
+    gtk.enable = lib.mkEnableOption "";
+
+    dotIcons.enable = (lib.mkEnableOption "") // {
+      default = true;
+    };
+
+    hyprcursor.enable = lib.mkEnableOption "hyprcursor config generation";
   };
 
   config = lib.mkIf cfg.enable {
