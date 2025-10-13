@@ -1,3 +1,3 @@
 actions:
   - on: push
-    run: getsuga-kitty-dockerpush
+    run: getsuga-hx-dockerpush
