@@ -129,6 +129,7 @@
                     # echo "$GARNIX_COMMIT_SHA"
                     # echo "$GARNIX_ACTION_PRIVATE_KEY_FILE"
                     echo ${outHash}
+                    curl --verbose 'https://cache.garnix.io/${outHash}.narinfo'
                     download_url="$(curl 'https://cache.garnix.io/${outHash}.narinfo' | grep -Po '(?<=URL: ).*')"
                     echo "$download_url"
                     curl "$download_url" | xz -dc | nix-store --restore 'image.tar.gz'
