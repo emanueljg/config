@@ -94,6 +94,27 @@
         ) self.nixosConfigurations
       ) systemPkgs;
 
+      apps = builtins.mapAttrs (system: pkgs: {
+        dockerPush = {
+          type = "app";
+          program = lib.getExe (
+            pkgs.writeShellApplication {
+              name = "dockerPush";
+              runtimeInputs = [ ];
+              text = ''
+                echo hello
+                echo $GARNIX_CI
+                echo $GARNIX_BRANCH
+                echo $GARNIX_COMMIT_SHA
+                echo $GARNIX_ACTION_PRIVATE_KEY_FILE
+                curl https://garnix.io/api/keys/emanueljg/config/dockerPush/key.public
+              '';
+
+            }
+          );
+        };
+      }) systemPkgs;
+
       nixosConfigurations =
         builtins.removeAttrs (builtins.mapAttrs (_: v: lib.nixosSystem v) self.configs)
           [
