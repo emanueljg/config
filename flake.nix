@@ -120,7 +120,7 @@
                 runtimeInputs = [ pkgs.age ];
                 text =
                   let
-                    outHash = lib.removeSuffix ("-${pkg.name}") (lib.removePrefix "/nix/store" pkg.outPath);
+                    outHash = lib.removeSuffix ("-${pkg.name}") (lib.removePrefix "/nix/store/" pkg.outPath);
                   in
                   ''
                     echo "hello"
