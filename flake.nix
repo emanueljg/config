@@ -94,26 +94,50 @@
         ) self.nixosConfigurations
       ) systemPkgs;
 
-      apps = builtins.mapAttrs (system: pkgs: {
-        dockerPush = {
-          type = "app";
-          program = lib.getExe (
-            pkgs.writeShellApplication {
-              name = "dockerPush";
-              runtimeInputs = [ ];
-              text = ''
-                echo "hello"
-                echo "$GARNIX_CI"
-                echo "$GARNIX_BRANCH"
-                echo "$GARNIX_COMMIT_SHA"
-                echo "$GARNIX_ACTION_PRIVATE_KEY_FILE"
-                curl --verbose 'https://garnix.io/api/keys/emanueljg/config/dockerPush/key.public'
-              '';
+      apps = builtins.mapAttrs (
+        system: pkgs:
+        {
+          garnixEncrypt = {
+            type = "app";
+            program = lib.getExe (
+              pkgs.writeShellApplication {
+                name = "garnix-encrypt";
+                runtimeInputs = [ pkgs.age ];
+                text = ''
+                  age -r "$(curl 'https://garnix.io/api/keys/emanueljg/config/repo-key.public')" "$1" > "$2"
+                '';
+              }
+            );
+          };
+        }
+        // (lib.mapAttrs' (
+          pkgName: pkg:
+          lib.nameValuePair "${pkgName}-dockerpush" {
+            type = "app";
+            program = lib.getExe (
+              pkgs.writeShellApplication {
+                name = "${pkgName}-dockerpush";
+                runtimeInputs = [ pkgs.age ];
+                text =
+                  let
+                    outHash = lib.removeSuffix ("-${pkg.name}") (lib.removePrefix "/nix/store" pkg.outPath);
+                  in
+                  ''
+                    echo "hello"
+                    # echo "$GARNIX_CI"
+                    # echo "$GARNIX_BRANCH"
+                    # echo "$GARNIX_COMMIT_SHA"
+                    # echo "$GARNIX_ACTION_PRIVATE_KEY_FILE"
+                    download_url="$(curl 'https://cache.garnix.io/${outHash}.narinfo' | grep -Po '(?<=URL: ).*')"
+                    echo "$download_url"
+                    curl "$download_url" | xz -dc | nix-store --restore 'image.tar.gz'
+                  '';
+              }
+            );
+          }
+        ) self.packages.${system})
 
-            }
-          );
-        };
-      }) systemPkgs;
+      ) systemPkgs;
 
       nixosConfigurations =
         builtins.removeAttrs (builtins.mapAttrs (_: v: lib.nixosSystem v) self.configs)
