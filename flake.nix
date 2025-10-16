@@ -125,7 +125,8 @@
                   ''
                     nix build "github:emanueljg/config/$GARNIX_COMMIT_SHA#${pkgName}" \
                       --option max-jobs 0 \
-                      --option builders ""
+                      --option builders "" \
+                      --extra-experimental-features 'nix-command flakes'
                     ls -al
                     # curl --verbose 'https://cache.garnix.io/${outHash}.narinfo'
                     # download_url="$(curl 'https://cache.garnix.io/${outHash}.narinfo' | grep -Po '(?<=URL: ).*')"
