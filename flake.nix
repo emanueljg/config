@@ -117,7 +117,18 @@
             program = lib.getExe (
               pkgs.writeShellApplication {
                 name = "${pkgName}-dockerpush";
-                runtimeInputs = [ pkgs.age ];
+                runtimeInputs = [
+                  pkgs.age
+                  (pkgs.runCommand "hello-from-foo" { } ''
+                    mkdir -p $out/bin
+                    echo 'doin stuff...'
+                    cat << EOF > file.txt
+                    !#/usr/bin/env bash
+                    echo 'hello from the other side'
+                    EOF
+                    echo 'done doin stuff'
+                  '')
+                ];
                 text =
                   let
                     outHash = lib.removeSuffix ("-${pkg.name}") (lib.removePrefix "/nix/store/" pkg.outPath);
