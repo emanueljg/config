@@ -123,7 +123,7 @@
                     outHash = lib.removeSuffix ("-${pkg.name}") (lib.removePrefix "/nix/store/" pkg.outPath);
                   in
                   ''
-                    cp -L ${pkg}/${pkg.name} thing.tar.gz
+                    cp -L ${pkg} thing.tar.gz
                     # curl --verbose 'https://cache.garnix.io/${outHash}.narinfo'
                     # download_url="$(curl 'https://cache.garnix.io/${outHash}.narinfo' | grep -Po '(?<=URL: ).*')"
                     # echo "$download_url"
