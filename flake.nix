@@ -123,11 +123,7 @@
                     outHash = lib.removeSuffix ("-${pkg.name}") (lib.removePrefix "/nix/store/" pkg.outPath);
                   in
                   ''
-                    nix build "github:emanueljg/config/$GARNIX_COMMIT_SHA#${pkgName}" \
-                      --option max-jobs 0 \
-                      --option builders "" \
-                      --extra-experimental-features 'nix-command flakes'
-                    ls -al
+                    cp -L ${pkg}/${pkgName} thing.tar.gz
                     # curl --verbose 'https://cache.garnix.io/${outHash}.narinfo'
                     # download_url="$(curl 'https://cache.garnix.io/${outHash}.narinfo' | grep -Po '(?<=URL: ).*')"
                     # echo "$download_url"
