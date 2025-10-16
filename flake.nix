@@ -123,16 +123,14 @@
                     outHash = lib.removeSuffix ("-${pkg.name}") (lib.removePrefix "/nix/store/" pkg.outPath);
                   in
                   ''
-                    echo "hello"
-                    # echo "$GARNIX_CI"
-                    # echo "$GARNIX_BRANCH"
-                    # echo "$GARNIX_COMMIT_SHA"
-                    # echo "$GARNIX_ACTION_PRIVATE_KEY_FILE"
-                    echo ${outHash}
-                    curl --verbose 'https://cache.garnix.io/${outHash}.narinfo'
-                    download_url="$(curl 'https://cache.garnix.io/${outHash}.narinfo' | grep -Po '(?<=URL: ).*')"
-                    echo "$download_url"
-                    curl "$download_url" | xz -dc | nix-store --restore 'image.tar.gz'
+                    nix build "github:emanueljg/config/$GARNIX_COMMIT_SHA#${pkgName}" \
+                      --option max-jobs 0 \
+                      --option builders "" \
+                    ls -al
+                    # curl --verbose 'https://cache.garnix.io/${outHash}.narinfo'
+                    # download_url="$(curl 'https://cache.garnix.io/${outHash}.narinfo' | grep -Po '(?<=URL: ).*')"
+                    # echo "$download_url"
+                    # curl "$download_url" | xz -dc | nix-store --restore 'image.tar.gz'
                   '';
               }
             );
