@@ -147,6 +147,14 @@
 
       ) systemPkgs;
 
+      devShells = builtins.mapAttrs (_: pkgs: {
+        default = pkgs.mkShell {
+          packages = [
+            pkgs.opentofu
+          ];
+        };
+      }) systemPkgs;
+
       nixosConfigurations =
         builtins.removeAttrs (builtins.mapAttrs (_: v: lib.nixosSystem v) self.configs)
           [
