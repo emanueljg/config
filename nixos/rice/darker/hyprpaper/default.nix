@@ -87,6 +87,10 @@ let
       url = "https://w.wallhaven.cc/full/4v/wallhaven-4vzxxm.jpg";
       hash = "sha256-ulka/S1FNbZhkpSsbuAZ0Hc0vcLYtPY2TU4aOTPl1Ps=";
     };
+    corpo = pkgs.fetchurl {
+      url = "https://i.4cdn.org/wg/1739907081989278.jpg";
+      hash = "sha256-ssw60snutNLH30KgvXGqcEOJMhc8LyAc5Z09NyHVrHE=";
+    };
   };
 in
 {
@@ -103,7 +107,7 @@ in
         # "HDMI-A-1,${papes.ganyu}"
         "DP-2,${papes.youmu-wind}"
         "DP-1,${papes.konosuba-megumin-field}"
-        "eDP-1,${papes.porco-rosso-nap}"
+        "eDP-1,${papes.corpo}"
       ];
     };
   };
