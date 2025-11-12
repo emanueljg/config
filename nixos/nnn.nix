@@ -12,7 +12,7 @@
         ];
         postBuild = ''
           wrapProgram $out/share/plugins/preview-tui \
-            --prefix PATH : ${lib.makeBinPath [ pkgs.poppler_utils ]}
+            --prefix PATH : ${lib.makeBinPath [ pkgs.poppler-utils ]}
 
           mkdir -p $out/HOME/nnn/{bookmarks,mounts,sessions}
           ln -s $out/share/plugins $out/HOME/nnn

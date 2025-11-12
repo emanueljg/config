@@ -87,10 +87,31 @@ let
       url = "https://w.wallhaven.cc/full/4v/wallhaven-4vzxxm.jpg";
       hash = "sha256-ulka/S1FNbZhkpSsbuAZ0Hc0vcLYtPY2TU4aOTPl1Ps=";
     };
-    corpo = pkgs.fetchurl {
+    corpo-laptop = pkgs.fetchurl {
       url = "https://i.4cdn.org/wg/1739907081989278.jpg";
       hash = "sha256-ssw60snutNLH30KgvXGqcEOJMhc8LyAc5Z09NyHVrHE=";
     };
+    corpo-front = pkgs.fetchurl {
+      url = "https://i.4cdn.org/wg/1743464080943577.jpg";
+      hash = "sha256-OetKG4tlr0OEv9SyO+rFFjeMJYsqAQzOKkK31O0oDKo=";
+    };
+    corpo-left = lib.fix (
+      self:
+      (pkgs.runCommand "corpo-left.jpg"
+        {
+          src = pkgs.fetchurl {
+            url = "https://i.4cdn.org/wg/1740157719746887.jpg";
+            hash = "sha256-XVI8OxkfjVf+v7MtYzPrKZaeypMyKa44rzO7sW3Gqd4=";
+          };
+          nativeBuildInputs = [ pkgs.imagemagick ];
+        }
+        ''
+          magick ${self.src} \
+            -rotate 90 \
+            $out
+        ''
+      )
+    );
   };
 in
 {
@@ -104,10 +125,17 @@ in
         (map (builtins.toString))
       ];
       wallpaper = [
-        # "HDMI-A-1,${papes.ganyu}"
+        # front
+        # "DP-2,${papes.corpo-front}"
         "DP-2,${papes.youmu-wind}"
+
+        # left
+        # "DP-1,${papes.corpo-left}"
         "DP-1,${papes.konosuba-megumin-field}"
-        "eDP-1,${papes.corpo}"
+
+        # laptop
+        # "eDP-1,${papes.corpo-laptop}"
+        "eDP-1,${papes.bleach-frisbee}"
       ];
     };
   };

@@ -51,6 +51,7 @@ in
 
       # development
       docker
+      oci
 
       # misc. fixes
       network-wait-online-fix

@@ -26,11 +26,9 @@
     enable-flakes
     garnix
     pkgs
-    openssh-server
     swedish-locale
     user
     sops
-    wg
     bat
     nnn
     aliases
