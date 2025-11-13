@@ -3,3 +3,4 @@
 *.tar.gz
 result
 result/
+terraform/.terraform/

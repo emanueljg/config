@@ -34,7 +34,7 @@
     { self, nixos-unstable, ... }@inputs:
     let
       inherit (nixos-unstable) lib;
-      systemPkgs = lib.getAttrs [ "x86_64-linux" ] nixos-unstable.legacyPackages;
+      systemPkgs = lib.getAttrs [ "x86_64-linux" "aarch64-linux" ] nixos-unstable.legacyPackages;
     in
     {
       modules =
