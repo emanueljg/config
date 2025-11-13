@@ -1,7 +1,6 @@
 {
   pkgs,
   lib,
-  nixpkgs,
   self,
   config,
   ...
@@ -42,17 +41,7 @@
 
       language-server = {
         rust-analyzer.command = lib.getExe pkgs.rust-analyzer;
-        nixd = {
-          command = lib.getExe pkgs.nixd;
-          config.nixd =
-            let
-              flake = "(builtins.getFlake (builtins.toString ${self.outPath}))";
-            in
-            {
-              nixpkgs.expr = "import ${flake}.inputs.nixos-unstable { }";
-              options.nixos.expr = "${flake}.nixosConfigurations.${config.networking.hostName}.options";
-            };
-        };
+        nil.command = lib.getExe pkgs.nil;
         gopls.command = lib.getExe pkgs.gopls;
         dart.command = lib.getExe pkgs.dart;
         pylsp =

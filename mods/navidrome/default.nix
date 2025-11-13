@@ -64,7 +64,7 @@
         "spotify/secret"
       ]
       (_: {
-        sopsFile = "${self}/secrets/${config.networking.hostName}/navidrome.yml";
+        sopsFile = ./sops.yml;
         mode = "0440";
         owner = "navidrome";
         group = "navidrome";

@@ -1,22 +1,14 @@
 {
-  self,
-  inputs,
   modules,
+  sourceModules,
+  nixpkgs,
   ...
 }:
 {
-
-  specialArgs = {
-    inherit self;
-    nixosModules = {
-      inherit (inputs.sops-nix.nixosModules) sops;
-    };
-    nixpkgs = {
-      inherit (inputs) nixos-unstable;
-    };
-  };
+  specialArgs = { inherit nixpkgs; };
 
   modules = with modules; [
+    sourceModules.sops-nix
     nix-path
     hw.libinput
     hw.efi-grub

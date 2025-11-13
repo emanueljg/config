@@ -1,9 +1,6 @@
 {
-  config,
-  packages,
   pkgs,
   lib,
-  self,
   ...
 }:
 {
@@ -16,7 +13,6 @@
 
   local.programs.hyprland = {
     enable = true;
-    package = pkgs.hyprland;
     plugins = [ pkgs.hyprlandPlugins.hy3 ];
     settings = {
       "$menu" = "wofi --show run";

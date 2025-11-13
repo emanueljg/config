@@ -30,7 +30,6 @@ in
       navidrome
       rutorrent
       rtorrent
-      kavita
 
       nginx
       porkbun

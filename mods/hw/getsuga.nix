@@ -1,14 +1,11 @@
 {
   config,
-  nixosModules,
-  pkgs,
   lib,
   modulesPath,
   ...
 }:
 {
   imports = [
-    nixosModules.nixos-hardware.lenovo-legion-16irx8h
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 

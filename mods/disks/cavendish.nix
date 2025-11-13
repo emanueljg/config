@@ -1,8 +1,4 @@
-{ nixosModules, ... }:
 {
-  imports = [
-    nixosModules.disko
-  ];
   disko.devices = {
     disk = {
       main = {

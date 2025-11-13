@@ -16,7 +16,7 @@ lib.mkMerge (
     sops = {
       secrets.${accessToken} = {
         mode = "0440";
-        sopsFile = "${self}/secrets/nix-access-tokens.json";
+        sopsFile = ./sops.yml;
       };
     };
 

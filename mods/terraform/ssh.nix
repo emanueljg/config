@@ -87,7 +87,7 @@
     in
     lib.genAttrs users (_: {
       openssh.authorizedKeys.keyFiles = [
-        "${self}/terraform/oracle-terraform-ssh.pub"
+        ./oracle-terraform-ssh.pub
       ];
     });
 }

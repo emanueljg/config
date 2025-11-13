@@ -6,7 +6,7 @@
       owner = "ejg";
       group = "users";
       mode = "0400";
-      sopsFile = "${self}/secrets/${config.networking.hostName}/oci.yml";
+      sopsFile = ./sops.yml;
     in
     {
       "oci-rsa-private.pem" = {

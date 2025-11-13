@@ -9,6 +9,28 @@ keys:
   - &ejg_seneca age1c8ah9uqdpm9qvape5urn2mwn7fqms7fk4dl9pu6wns9j44rgccrsth88y5
 
 creation_rules:
+  - path_regex: mods/navidrome/sops.yml
+    key_groups:
+    - age:
+      - *ejg_void
+      - *ejg_getsuga
+      - *host_void
+
+  - path_regex: mods/terraform/sops.yml
+    key_groups:
+    - age:
+      - *ejg_void
+      - *ejg_getsuga
+      - *host_getsuga
+
+  - path_regex: mods/access-tokens/sops.yml
+    key_groups:
+    - age:
+      - *ejg_void
+      - *ejg_getsuga
+      - *host_getsuga
+      - *host_void
+
   - path_regex: secrets/getsuga/.*
     key_groups:
     - age:

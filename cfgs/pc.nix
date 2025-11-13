@@ -1,8 +1,7 @@
 {
-  inputs,
   modules,
+  sourceModules,
   configs,
-  lib,
   ...
 }:
 cfg:
@@ -18,6 +17,8 @@ in
   modules =
     parent.modules
     ++ (with modules; [
+      sourceModules.disko
+
       # core
       networkmanager
       pavucontrol

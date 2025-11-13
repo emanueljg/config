@@ -1,8 +1,7 @@
 {
-  inputs,
   modules,
+  sourceModules,
   configs,
-  lib,
   ...
 }:
 cfg:
@@ -10,31 +9,14 @@ let
   parent = configs.pc;
 in
 {
-  inherit (parent) system;
-
-  specialArgs = lib.recursiveUpdate parent.specialArgs {
-    packages = {
-      inherit (inputs.hy3.packages.${cfg.system}) hy3;
-      inherit (inputs.hyprland.packages.${cfg.system}) hyprland;
-    };
-
-    nixosModules = {
-      disko = inputs.disko.nixosModules.disko;
-      nixos-hardware = {
-        inherit (inputs.nixos-hardware.nixosModules) lenovo-legion-16irx8h;
-      };
-    };
-
-    other = {
-      vidya = inputs.vidya.legacyPackages.${cfg.system};
-    };
-  };
+  inherit (parent) system specialArgs;
 
   modules =
     parent.modules
     ++ (with modules; [
       hostnames.getsuga
       # hardware
+      sourceModules.getsuga-legion
       disks.getsuga
       hw.getsuga
       hw.nvidia
@@ -45,13 +27,12 @@ in
       nginx-localhost
 
       # gaming
-      fetch-from-itch
       gamescope
       obs
 
       # development
       docker
-      oci
+      terraform.oci
 
       # misc. fixes
       network-wait-online-fix
