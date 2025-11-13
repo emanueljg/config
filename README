@@ -1,0 +1,61 @@
+This git repository is an experiment to see how we can better engineer NixOS¹ configuration. It's a 
+configuration set that I run on all of my machines, and has undergone several complete transformations since its inception in 2021.
+Each transformation brings with it wisdom from what did and what didn't work.
+
+The current configuration has the following uncommon qualities:
+
+
+1. Not using flakes, not using npins.
+
+It doesn't use the now-famous flake² schema. It doesn't even use a less-common-but-still-common locking solution like npins³. No. Instead,
+we use a manual pinning setup (see './sources.nix'). Essentially, trivial human-edited 'builtins.fetchTree' invocations, which is like a slightly
+more versatile 'builtins.fetchTarball', gets passed along as default arguments to the 'default.nix' function.
+This solution avoids the bloat we've seen from flake projects, yet spares the developer from learning
+yet another CLI tool for no reason other than minor UX (npins, niv or similar). Super simple to wrap your head around too, which is a bonus.
+
+
+2. Very flat module list.
+
+The overwhelming majority of NixOS configurations are matryoshka dolls; the host 'alpha' may contain a directory 'nixos', which may
+contain directory 'window-managers', which which may contain 'hyprland', which may contain
+'default.nix', 'package.nix', 'colors.nix' and so on, each level recursively including all imports at that level and the level directly below it.
+
+It's no shocker that this module pattern emerges: we're all nerds, and nerds famously likes to categorize things. But after some years
+of using NixOS, I've begun to strongly prefer to make each logical configuration chunk a top-level module. When I want a host to have hyprland, I just want to add
+it with '++ [ <modules>/hyprland.nix ]' and be done with it. I'm writing modules as configuration to be understood by humans, not as an exercise in taxonomy.
+
+The obvious argument here is that nested modules make it more obvious which modules are tightly coupled and which ones aren't. In my experience,
+the way you can choose between multiple permutations of module coupling endlessly makes this a productivity sinkhole and it's better to just make it
+flat and be done with it, which (as stated above) will make it easier to actually find the modules when you need them.
+We put our trust in the module consumer to make reasonable assumptions of what module imports are needed for a module to function ("hmm, if my host wants 'dwm.nix', then it
+probably wants 'x11.nix' too"). This "freeform" way of specifying modules gives the consumer the ability to provide their own smaller "parent module" than the
+one we planned for at the onset of making the "child module". 
+
+Flatness isn't forced on all configuration, there are some notable exceptions of sensible nesting, but generally speaking I have found that it's better to
+err on the side of too flat than too nested.
+
+
+3. Small modules are great, and you can never have too few modules.
+
+TODO
+
+
+4. Module tree from file tree
+
+There's this very interesting nix project called haumea⁴. Its purpose is to covert a directory of Nix files into an attribute set:
+
+├─ foo/                                 {
+│  ├─ bar.nix                             foo = {
+│  ├─ baz.nix                               bar = <...>;
+│  └─ __internal.nix       --->           };
+├─ bar.nix                                bar = <...>;
+└─ _utils/                              }
+   └─ foo.nix
+
+TODO
+
+---
+¹ https://nixos.org/
+² https://www.tweag.io/blog/2020-05-25-flakes/
+³ https://github.com/andir/npins
+⁴ https://github.com/nix-community/haumea
