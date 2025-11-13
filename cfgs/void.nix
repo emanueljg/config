@@ -13,15 +13,7 @@ in
 
   system = "x86_64-linux";
 
-  specialArgs = lib.recursiveUpdate parent.specialArgs {
-    nixosModules = {
-      archiver = inputs.archiver.nixosModules.default;
-    };
-
-    other = {
-      archiver-lib = inputs.archiver.lib.${cfg.system};
-    };
-  };
+  inherit (parent) specialArgs;
 
   modules =
     parent.modules
@@ -38,7 +30,6 @@ in
       navidrome
       rutorrent
       rtorrent
-      archiver
       kavita
 
       nginx

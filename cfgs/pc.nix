@@ -13,11 +13,7 @@ in
 
   system = "x86_64-linux";
 
-  specialArgs = lib.recursiveUpdate parent.specialArgs {
-    packages = {
-      inherit (inputs.nix-alien.packages.${cfg.system}) nix-alien;
-    };
-  };
+  inherit (parent) specialArgs;
 
   modules =
     parent.modules
@@ -56,8 +52,5 @@ in
       xdg
       cursor
       fontconfig
-
-      # programming
-      nix-alien
     ]);
 }

@@ -17,17 +17,6 @@
       url = "github:NixOS/nixos-hardware";
     };
 
-    archiver = {
-      url = "github:emanueljg/archiver";
-    };
-
-    nix-alien = {
-      url = "github:thiagokokada/nix-alien";
-      # not overriden, see:
-      # https://github.com/thiagokokada/nix-alien?tab=readme-ov-file#nixos-installation-with-flakes
-      # inputs.nixpkgs.follows = "nixpkgs";
-    };
-
   };
 
   outputs =
