@@ -5,13 +5,21 @@
   ...
 }:
 {
-  imports = with modules; [
-    # this breaks the nice pattern we have going,
-    # but I can't find out a nicer way of doing it right now.
+  imports = [
+
     { _module.args = { inherit nixpkgs; }; }
 
     sourceModules.sops-nix
-    nix-path
+
+    {
+      nix.nixPath = [
+        # NOTE: this'll be nixos-unstable
+        "nixpkgs=${nixpkgs}"
+      ];
+    }
+
+  ]
+  ++ (with modules; [
     hw.libinput
     hw.efi-grub
     wrap
@@ -37,6 +45,6 @@
     zsh
     kitty
     themes
-  ];
+  ]);
 
 }
