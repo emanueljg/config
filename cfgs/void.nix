@@ -1,42 +1,33 @@
 {
-  inputs,
   modules,
   configs,
-  lib,
   ...
 }:
-cfg:
-let
-  parent = configs.base;
-in
 {
+  imports = [
+    configs.base
+  ]
+  ++ (with modules; [
+    hostnames.void
+    systems.x86_64-linux
+    lan.void
+    hw.nvidia
+    hw.void
 
-  system = "x86_64-linux";
+    sonarr
+    # fuck this shit
+    # invidious
+    jellyfin
+    navidrome
+    rutorrent
+    rtorrent
 
-  inherit (parent) specialArgs;
+    nginx
+    porkbun
 
-  modules =
-    parent.modules
-    ++ (with modules; [
-      hostnames.void
-      lan.void
-      hw.nvidia
-      hw.void
+    nixos-rebuild.void
 
-      sonarr
-      # fuck this shit
-      # invidious
-      jellyfin
-      navidrome
-      rutorrent
-      rtorrent
+    stateversions."22-11"
 
-      nginx
-      porkbun
-
-      nixos-rebuild.void
-
-      stateversions."22-11"
-
-    ]);
+  ]);
 }

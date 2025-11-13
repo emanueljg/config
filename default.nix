@@ -18,55 +18,22 @@ lib.fix (self: {
     getsuga-legion = getsuga-legion-module;
   };
 
-  modules =
-    let
-      modulesToAttrs =
-        cursor:
-        let
-          paths = builtins.readDir cursor;
-        in
-        if paths ? "default.nix" then
-          (import cursor)
-        else
-          (lib.filterAttrsRecursive (_: v: v != null) (
-            lib.mapAttrs' (
-              n: v:
-              lib.nameValuePair (if v == "regular" then (lib.removeSuffix ".nix" n) else n) (
-                if v == "regular" && !(lib.hasSuffix ".nix" n) then
-                  null
-                else if v == "regular" then
-                  (import "${cursor}/${n}")
-                else if v == "directory" then
-                  (modulesToAttrs "${cursor}/${n}")
-                else
-                  (builtins.throw "")
-              )
-            ) paths
-          ));
-    in
-    modulesToAttrs ./mods;
+  modules = import ./mods { inherit lib; };
+  configs = import ./cfgs { inherit lib nixpkgs self; };
 
-  configs =
-    let
-      cfgDir = ./cfgs;
-    in
-    lib.mapAttrs' (
-      n: v:
-      lib.nameValuePair (lib.removeSuffix ".nix" n) (
-        let
-          x = (
-            (import "${cfgDir}/${n}") {
-              inherit lib nixpkgs;
-              inherit (self) modules sourceModules configs;
-            }
-          );
-        in
-        if builtins.isFunction x then lib.fix x else x
-      )
-    ) (builtins.readDir cfgDir);
-
-  nixosConfigurations = builtins.removeAttrs (builtins.mapAttrs (_: v: eval-config v) self.configs) [
-    "base"
-    "pc"
-  ];
+  nixosConfigurations =
+    builtins.removeAttrs
+      (builtins.mapAttrs (
+        _: v:
+        eval-config {
+          # the following allows us to set system with a { nixpkgs.system = ... } module
+          # https://github.com/NixOS/nixpkgs/blob/bc820e509bacaf06dd07b5fc807d8756179df95b/nixos/lib/eval-config.nix#L12
+          system = null;
+          modules = [ v ];
+        }
+      ) self.configs)
+      [
+        "base"
+        "pc"
+      ];
 })

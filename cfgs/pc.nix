@@ -4,54 +4,47 @@
   configs,
   ...
 }:
-cfg:
-let
-  parent = configs.base;
-in
 {
 
-  system = "x86_64-linux";
+  imports = [
+    configs.base
+    sourceModules.disko
+  ]
+  ++ (with modules; [
 
-  inherit (parent) specialArgs;
+    # core
+    networkmanager
+    pavucontrol
+    hw.bluetooth
+    add-headphones-script
 
-  modules =
-    parent.modules
-    ++ (with modules; [
-      sourceModules.disko
+    # general software
+    firefox
+    qutebrowser
+    tor-browser
 
-      # core
-      networkmanager
-      pavucontrol
-      hw.bluetooth
-      add-headphones-script
+    # wayland
+    hyprland
+    greetd
+    swaylock
+    pipewire
+    wl-clipboard
+    wofi
+    waybar
 
-      # general software
-      firefox
-      qutebrowser
-      tor-browser
+    # multimedia
+    mpv
+    ffmpeg
+    ani-cli
+    yt-dlp
+    qbittorrent
+    pipe-viewer
+    zathura
 
-      # wayland
-      hyprland
-      greetd
-      swaylock
-      pipewire
-      wl-clipboard
-      wofi
-      waybar
-
-      # multimedia
-      mpv
-      ffmpeg
-      ani-cli
-      yt-dlp
-      qbittorrent
-      pipe-viewer
-      zathura
-
-      # customization
-      rice.darker
-      xdg
-      cursor
-      fontconfig
-    ]);
+    # customization
+    rice.darker
+    xdg
+    cursor
+    fontconfig
+  ]);
 }

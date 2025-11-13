@@ -4,40 +4,38 @@
   configs,
   ...
 }:
-cfg:
-let
-  parent = configs.pc;
-in
 {
-  inherit (parent) system specialArgs;
+  imports = [
+    configs.pc
+  ]
+  ++ (with modules; [
+    # meta
+    hostnames.getsuga
+    systems.x86_64-linux
 
-  modules =
-    parent.modules
-    ++ (with modules; [
-      hostnames.getsuga
-      # hardware
-      sourceModules.getsuga-legion
-      disks.getsuga
-      hw.getsuga
-      hw.nvidia
+    # hardware
+    sourceModules.getsuga-legion
+    disks.getsuga
+    hw.getsuga
+    hw.nvidia
 
-      nixos-rebuild.getsuga
+    nixos-rebuild.getsuga
 
-      # core-specfic
-      nginx-localhost
+    # core-specfic
+    nginx-localhost
 
-      # gaming
-      gamescope
-      obs
+    # gaming
+    gamescope
+    obs
 
-      # development
-      docker
-      terraform.oci
+    # development
+    docker
+    terraform.oci
 
-      # misc. fixes
-      network-wait-online-fix
+    # misc. fixes
+    network-wait-online-fix
 
-      stateversions."23-11"
-    ]);
+    stateversions."23-11"
+  ]);
 
 }

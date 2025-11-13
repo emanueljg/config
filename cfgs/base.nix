@@ -5,9 +5,11 @@
   ...
 }:
 {
-  specialArgs = { inherit nixpkgs; };
+  imports = with modules; [
+    # this breaks the nice pattern we have going,
+    # but I can't find out a nicer way of doing it right now.
+    { _module.args = { inherit nixpkgs; }; }
 
-  modules = with modules; [
     sourceModules.sops-nix
     nix-path
     hw.libinput
