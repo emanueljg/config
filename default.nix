@@ -6,6 +6,8 @@ in
   sops-nix-module ? sources.sops-nix-module,
   disko-module ? sources.disko-module,
   getsuga-legion-module ? sources.getsuga-legion-module,
+
+  nixpkgsHyprland ? sources.nixpkgsHyprland,
 }:
 let
   lib = import "${nixpkgs}/lib";
@@ -19,7 +21,14 @@ lib.fix (self: {
   };
 
   modules = import ./mods { inherit lib; };
-  configs = import ./cfgs { inherit lib nixpkgs self; };
+  configs = import ./cfgs {
+    inherit
+      lib
+      nixpkgs
+      self
+      nixpkgsHyprland
+      ;
+  };
 
   nixosConfigurations =
     builtins.removeAttrs

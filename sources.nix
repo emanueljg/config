@@ -8,6 +8,14 @@
     narHash = "sha256-SlybxLZ1/e4T2lb1czEtWVzDCVSTvk9WLwGhmxFmBxI=";
   };
 
+  nixpkgsHyprland = builtins.fetchTree {
+    type = "github";
+    owner = "nixos";
+    repo = "nixpkgs";
+    rev = "012b24398f02520866f846f61d61c40ca3242952";
+    narHash = "sha256-ZUGGF6pPDCd0ME9aaPKxSr4ssQvBNtwWdgRoEiWBTqI=";
+  };
+
   sops-nix-module = "${
     builtins.fetchTree {
       type = "github";

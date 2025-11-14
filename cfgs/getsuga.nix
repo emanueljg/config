@@ -2,11 +2,26 @@
   modules,
   sourceModules,
   configs,
+  lib,
+  nixpkgsHyprland,
   ...
 }:
 {
   imports = [
     configs.pc
+    (
+      { config, ... }:
+      let
+        pkgs' = import nixpkgsHyprland { inherit (config.nixpkgs) system; };
+      in
+      {
+        local.programs.hyprland = {
+          package = pkgs'.hyprland;
+          plugins = lib.mkForce [ pkgs'.hyprlandPlugins.hy3 ];
+        };
+        # local.services.hyprpaper.package = pkgs'.hyprpaper;
+      }
+    )
   ]
   ++ (with modules; [
     # meta
