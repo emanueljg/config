@@ -19,7 +19,7 @@ let
             else if v == "directory" then
               (modulesToAttrs { cursor = "${cursor}/${n}"; })
             else
-              (builtins.throw "")
+              (builtins.throw "Unexpected path qualities! This needs to be fixed. File: ${n}:${v}")
           )
         ) paths
       ));
