@@ -40,7 +40,6 @@
     nginx-localhost
 
     # gaming
-    gamescope
     obs
 
     # development
