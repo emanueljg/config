@@ -1,7 +1,7 @@
-{ nixpkgs, ... }:
+{ pkgs, ... }:
 {
   nix.nixPath = [
     # NOTE: this'll be nixos-unstable
-    "nixpkgs=${nixpkgs}"
+    "nixpkgs=${pkgs.path}"
   ];
 }

@@ -6,20 +6,10 @@
 }:
 {
   imports = [
-
-    { _module.args = { inherit nixpkgs; }; }
-
     sourceModules.sops-nix
-
-    {
-      nix.nixPath = [
-        # NOTE: this'll be nixos-unstable
-        "nixpkgs=${nixpkgs}"
-      ];
-    }
-
   ]
   ++ (with modules; [
+    nix-path
     hw.libinput
     hw.efi-grub
     wrap
