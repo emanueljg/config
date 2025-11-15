@@ -1,7 +1,6 @@
 {
   modules,
   sourceModules,
-  nixpkgs,
   ...
 }:
 {
