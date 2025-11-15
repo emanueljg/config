@@ -24,10 +24,10 @@ lib.fix (self: {
   configs = import ./cfgs {
     inherit lib;
     inherit (self)
-      sourceModules
-      nixpkgsHyprland
       modules
       configs
+      sourceModules
+      nixpkgsHyprland
       ;
   };
 
@@ -35,18 +35,13 @@ lib.fix (self: {
     let
       eval-config = import "${nixpkgs}/nixos/lib/eval-config.nix";
     in
-    builtins.removeAttrs
-      (builtins.mapAttrs (
-        _: v:
-        eval-config {
-          # system = null lets us to set system with a { nixpkgs.system = ... } module
-          # https://github.com/NixOS/nixpkgs/blob/bc820e509bacaf06dd07b5fc807d8756179df95b/nixos/lib/eval-config.nix#L12
-          system = null;
-          modules = [ v ];
-        }
-      ) self.configs)
-      [
-        "base"
-        "pc"
-      ];
+    builtins.mapAttrs (
+      _: v:
+      eval-config {
+        # system = null lets us to set system with a { nixpkgs.system = ... } module
+        # https://github.com/NixOS/nixpkgs/blob/bc820e509bacaf06dd07b5fc807d8756179df95b/nixos/lib/eval-config.nix#L12
+        system = null;
+        modules = [ v ];
+      }
+    ) self.configs;
 })
