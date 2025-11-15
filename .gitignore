@@ -3,4 +3,5 @@
 *.tar.gz
 result
 result/
-terraform/.terraform/
+.terraform/
+.terraform.lock.hcl
