@@ -1,17 +1,26 @@
-This git repository is an experiment to see how we can better engineer NixOS¹ configuration. It's a 
+This git repository is an experiment to see how we can better engineer NixOS[0] configuration. It's a 
 configuration set that I run on all of my machines, and has undergone several complete transformations since its inception in 2021.
 Each transformation brings with it wisdom from what did and what didn't work.
+
+
+Usage:
+$ sudo nixos-rebuild switch --file . --attr 'nixosConfigurations.<hostname>'
+
+You might have to enable the experimental feature to use 'builtins.fetchTree'.
+
+
 
 The current configuration has the following uncommon qualities:
 
 
 1. Not using flakes, not using npins.
 
-It doesn't use the now-famous flake² schema. It doesn't even use a less-common-but-still-common locking solution like npins³. No. Instead,
+It doesn't use the now-famous flake[1] schema. It doesn't even use a less-common-but-still-common locking solution like npins[3]. No. Instead,
 we use a manual pinning setup (see './sources.nix'). Essentially, trivial human-edited 'builtins.fetchTree' invocations, which is like a slightly
 more versatile 'builtins.fetchTarball', gets passed along as default arguments to the 'default.nix' function.
 This solution avoids the bloat we've seen from flake projects, yet spares the developer from learning
 yet another CLI tool for no reason other than minor UX (npins, niv or similar). Super simple to wrap your head around too, which is a bonus.
+
 
 
 2. Very flat module list.
@@ -28,34 +37,78 @@ The obvious argument here is that nested modules make it more obvious which modu
 the way you can choose between multiple permutations of module coupling endlessly makes this a productivity sinkhole and it's better to just make it
 flat and be done with it, which (as stated above) will make it easier to actually find the modules when you need them.
 We put our trust in the module consumer to make reasonable assumptions of what module imports are needed for a module to function ("hmm, if my host wants 'dwm.nix', then it
-probably wants 'x11.nix' too"). This "freeform" way of specifying modules gives the consumer the ability to provide their own smaller "parent module" than the
+probably wants 'x11.nix' too"). This "freeform" way of specifying modules also gives the consumer the ability to provide their own smaller "parent module" than the
 one we planned for at the onset of making the "child module". 
 
 Flatness isn't forced on all configuration, there are some notable exceptions of sensible nesting, but generally speaking I have found that it's better to
 err on the side of too flat than too nested.
 
 
-3. Small modules are great, and you can never have too few modules.
 
-TODO
+3. Modules should be contractual interfaces, so they will tend to be a) small and b) numerous
+
+Just like with any programming, a logical unit of computation (here, NixOS modules) should do one thing and do it well.
+The module name becomes the public interface for the expected functionality; I expect '/modules/firefox.nix' to contain
+all the necessary things for firefox for work.
+
+It's completely OK for a module to contain nothing but a trivial '{ pkgs, ... }: { environment.systemPackages = [ pkgs.<package-name> ]; }'.
+The only promise we give the user with the module name 'firefox.nix' is that installs firefox; the module consumer doesn't have to debase themselves
+having to get involved with implementation details of exactly how we choose to do that. This module might have to grow later on: configuring xdg-open,
+setting bookmarks, installing plugins... with this filesystem contract written right out the gate, we leave ourselves room for changing the
+implementation and feature set later on. 
+
+For this style of configuration, there has to be a lot of atomic modules for each "concept" a consumer wants, and so these tend on the smaller side.
+Without having done a large-scale performane test, this does seem to be a winning concept.
 
 
-4. Module tree from file tree
 
-There's this very interesting nix project called haumea⁴. Its purpose is to covert a directory of Nix files into an attribute set:
+4. Module attrset from file tree
 
-├─ foo/                                 {
-│  ├─ bar.nix                             foo = {
-│  ├─ baz.nix                               bar = <...>;
-│  └─ __internal.nix       --->           };
-├─ bar.nix                                bar = <...>;
-└─ _utils/                              }
+There's this very interesting nix project called haumea[3]. Its purpose is to covert a directory of Nix files into an
+automatically recursed attribute set of imports:
+
+├─ foo/                       {
+│  ├─ bar.nix                   foo = {
+│  ├─ baz.nix         load()      bar = <...>;
+│  └─ __internal.nix  ----->    };
+├─ bar.nix                      bar = <...>;
+└─ _utils/                    }
    └─ foo.nix
 
-TODO
+The library itself is, in my opinion, painfully overengineered
+(_underscore ignores, private/package scopes, tree root/branch arguments, in-eval branch loading modification, etc),
+having made questionable design choices to give the user this auto-import functionality. The way the author
+uses this project for his own configuration is also downright horrifying[4].
+
+But - the idea of your file system giving you an automatically loaded attrset of modules to use is excellent, which is what we do in this
+configuration, with a zero-dependency simple recursive file system import helper.
+
+Beyond practicality and usefulness, this machinery is motivated by a very important feature: it allows for
+bidirectional invisible `default.nix` migrations. Traditionally, when you're importing a "loose" NixOS module,
+you're using a path literal:
+
+imports = [ 
+   ./modules/foo.nix
+];
+
+Let's say we want to refactor out some stuff that has to do with 'foo' out of 'foo.nix' and into 'extra-foo-stuff.nix'. The idiomatic way to do this
+is to move 'foo.nix' into a new directory './modules/foo' with destination './modules/foo/default.nix'. Inside of dir 'foo',
+'default.nix' imports 'extra-foo-stuff.nix'. 'foo' consumers are now forced to change their imports:
+
+imports = [
+   # not a file anymore, but a directory!
+   # expanded by nix as ./modules/foo/default.nix
+   ./modules/foo
+];
+
+which obviously breaks stuff for the foo consumers, when these consumers really shouldn't be concerned about internal foo implementation details like
+its file structure. This flip-flopping is solved by attrset modules: 'moduleSet.foo' can both refer to both './modules/foo.nix' and './modules/foo' trivially.
+
+
 
 ---
-¹ https://nixos.org/
-² https://www.tweag.io/blog/2020-05-25-flakes/
-³ https://github.com/andir/npins
-⁴ https://github.com/nix-community/haumea
+[0] https://nixos.org/
+[1] https://www.tweag.io/blog/2020-05-25-flakes/
+[2] https://github.com/andir/npins
+[3] https://github.com/nix-community/haumea
+[4] https://github.com/figsoda/cfg/tree/63f7ca1a3e7d4664590701e49ad889e6381e13b8
