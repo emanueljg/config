@@ -1,8 +1,4 @@
 {
-  pkgs,
-  ...
-}:
-{
   _file = ./greetd.nix;
   local.greetd = {
     enable = true;
