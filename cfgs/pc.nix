@@ -17,6 +17,7 @@
     pavucontrol
     hw.bluetooth
     greetd
+    pipewire
 
     # general software
     firefox
@@ -26,7 +27,6 @@
     # wayland
     hyprland
     swaylock
-    pipewire
     wl-clipboard
     wofi
     waybar
