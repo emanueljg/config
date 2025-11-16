@@ -18,5 +18,6 @@
     ./hyprland.nix
     ./wrap.nix
     ./themes.nix
+    ./greetd.nix
   ];
 }

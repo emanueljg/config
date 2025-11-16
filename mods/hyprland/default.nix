@@ -4,12 +4,15 @@
   ...
 }:
 {
+  _file = ./default.nix;
 
   imports = [
     ./substituters.nix
     ./env-vars.nix
     ./monitors.nix
   ];
+
+  local.greetd.tuigreet.cmd = "Hyprland";
 
   local.programs.hyprland = {
     enable = true;

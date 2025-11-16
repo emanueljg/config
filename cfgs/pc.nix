@@ -16,7 +16,7 @@
     networkmanager
     pavucontrol
     hw.bluetooth
-    add-headphones-script
+    greetd
 
     # general software
     firefox
@@ -25,7 +25,6 @@
 
     # wayland
     hyprland
-    greetd
     swaylock
     pipewire
     wl-clipboard
@@ -46,5 +45,6 @@
     xdg
     cursor
     fontconfig
+    add-headphones-script
   ]);
 }
