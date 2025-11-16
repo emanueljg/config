@@ -4,7 +4,7 @@ Each transformation brings with it wisdom from what did and what didn't work.
 
 
 Usage:
-$ sudo nixos-rebuild switch --file . --attr 'nixosConfigurations.<hostname>'
+$ sudo nixos-rebuild switch --attr 'nixosConfigurations.<hostname>'
 
 You might have to enable the experimental feature to use 'builtins.fetchTree'.
 
