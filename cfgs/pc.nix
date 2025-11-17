@@ -25,11 +25,12 @@
     tor-browser
     weather-script
 
-    # xorg
+    # wayland
     dwl
     waybar
     wmenu
     wl-clipboard
+    somebar
 
     # multimedia
     mpv
