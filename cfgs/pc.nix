@@ -23,6 +23,7 @@
     firefox
     qutebrowser
     tor-browser
+    weather-script
 
     # xorg
     dwl

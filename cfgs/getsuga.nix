@@ -48,6 +48,7 @@
 
     # misc. fixes
     network-wait-online-fix
+    hidpi-tweaks
 
     stateversions."23-11"
   ]);
