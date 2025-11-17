@@ -1,5 +1,10 @@
+{ pkgs, lib, ... }:
 {
   _file = ./greetd.nix;
+  services.xserver.displayManager.startx = {
+    enable = true;
+    generateScript = false;
+  };
   local.greetd = {
     enable = true;
     tuigreet.extraOptions = {

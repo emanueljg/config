@@ -24,12 +24,11 @@
     qutebrowser
     tor-browser
 
-    # wayland
-    hyprland
-    swaylock
-    wl-clipboard
-    wofi
+    # xorg
+    dwl
     waybar
+    wmenu
+    wl-clipboard
 
     # multimedia
     mpv
