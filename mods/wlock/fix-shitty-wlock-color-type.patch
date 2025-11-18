@@ -1,0 +1,99 @@
+diff --git a/config.def.h b/config.def.h
+index 3ebb40b..2779976 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -1,8 +1,8 @@
+-static Clr colorname[4] = {
+-	[INIT]      = { 0x00000000, 0x00000000, 0x00000000 }, /* after initialization */
+-	[INPUT]     = { 0x00000000, 0x55555555, 0x77777777 }, /* during input */
+-	[INPUT_ALT] = { 0x00000000, 0x50505050, 0x70707070 }, /* during input, second color */
+-	[FAILED]    = { 0xcccccccc, 0x33333333, 0x33333333 }, /* wrong password */
++static uint32_t colorname[4] = {
++	[INIT]      = 0x000000, /* after initialization */
++	[INPUT]     = 0x005577, /* during input */
++	[INPUT_ALT] = 0x005070, /* during input, second color */
++	[FAILED]    = 0xcc3333, /* wrong password */
+ };
+ 
+ /* treat a cleared input like a wrong password (color) */
+diff --git a/wlock.c b/wlock.c
+index b930001..e5d9bad 100644
+--- a/wlock.c
++++ b/wlock.c
+@@ -18,10 +18,6 @@
+ #include "single-pixel-buffer-v1-protocol.h"
+ #include "viewporter-protocol.h"
+ 
+-typedef struct {
+-	unsigned int r, g, b;
+-} Clr;
+-
+ typedef struct {
+ 	uint32_t wl_name;
+ 	struct wl_output *wl_output;
+@@ -58,6 +54,8 @@ static struct wl_list outputs;
+ static char *hash;
+ static bool locked, running;
+ 
++static uint32_t SPLAT = 0x01010101;
++
+ enum input_state { INIT, FAILED, INPUT, INPUT_ALT } input_state = INIT;
+ 
+ #include "config.h"
+@@ -70,35 +68,21 @@ noop()
+ 	 */
+ }
+ 
+-static Clr
+-parse_clr(const char *color)
+-{
+-	int len;
+-	unsigned int res;
+-
+-	len = strlen(color);
+-	if (len != 6)
+-		errx(EXIT_FAILURE, "invalid color given: %s", color);
+-
+-	res = strtoul(color, NULL, 16);
+-
+-	return (Clr){
+-		((res >> 16) & 0xff) * (0xffffffff / 0xff),
+-		((res >> 8) & 0xff) * (0xffffffff / 0xff),
+-		((res >> 0) & 0xff) * (0xffffffff / 0xff),
+-	};
+-}
+-
+ static void
+ output_frame(Output *output)
+ {
+-	Clr c = colorname[input_state];
++	uint32_t c = colorname[input_state];
+ 	struct wl_buffer *buffer;
+ 	struct wl_region *opaque = wl_compositor_create_region(compositor);
+ 
+ 	/* alpha has no effect on this surface */
+ 	buffer = wp_single_pixel_buffer_manager_v1_create_u32_rgba_buffer(
+-		buf_manager, c.r, c.g, c.b, 0xffffffff);
++		buf_manager,
++		((c >> 16) & 0xff) * SPLAT,
++		((c >> 8) & 0xff) * SPLAT,
++		(c & 0xff) * SPLAT,
++		0xffffffff
++	);
+ 
+ 	wl_surface_attach(output->surface, buffer, 0, 0);
+ 	wl_surface_damage_buffer(output->surface, 0, 0, INT32_MAX, INT32_MAX);
+@@ -459,13 +443,6 @@ main(int argc, char *argv[])
+ 
+ 	while ((opt = getopt(argc, argv, "a:c:f:i:vh")) != -1) {
+ 		switch (opt) {
+-		case 'a':
+-		case 'c':
+-		case 'f':
+-		case 'i':
+-			colorname[opt == 'f' ? FAILED : opt == 'i' ? INPUT :
+-			          opt == 'a' ? INPUT_ALT : INIT] = parse_clr(optarg);
+-			break;
+ 		case 'v':
+ 			puts("wlock " VERSION);
+ 			return EXIT_SUCCESS;

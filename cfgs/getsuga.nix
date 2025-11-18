@@ -33,6 +33,7 @@
     disks.getsuga
     hw.getsuga
     hw.nvidia
+    swapfiles."32GiB"
 
     nixos-rebuild.getsuga
 

@@ -4,11 +4,12 @@
   ...
 }:
 {
+
   imports = [
     sourceModules.sops-nix
   ]
   ++ (with modules; [
-    nix-path
+    nixpkgs-var
     hw.libinput
     hw.efi-grub
     wrap
@@ -36,4 +37,5 @@
     themes
   ]);
 
+  _file = ./base.nix;
 }

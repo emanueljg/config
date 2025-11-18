@@ -31,6 +31,8 @@
     wmenu
     wl-clipboard
     somebar
+    someblocks
+    wlock
 
     # multimedia
     mpv
