@@ -34,6 +34,7 @@
     someblocks
     wlock
     wayland-env
+    wlr-randr
 
     # multimedia
     mpv
