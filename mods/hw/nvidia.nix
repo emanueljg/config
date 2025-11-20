@@ -21,4 +21,17 @@
   ];
   hardware.graphics.enable32Bit = true;
   hardware.graphics.extraPackages = [ pkgs.nvidia-vaapi-driver ];
+  environment.sessionVariables = {
+    # used to use this when I had hyprland,
+    # but dwl doesn't respect AQ_DRM_DEVICES, so
+    # I just disabled the iGPU in BIOS.
+    # AQ_DRM_DEVICES = "/dev/dri/card0:/dev/dri/card1";
+    # MESA_VK_DEVICE_SELECT = "10de:28e0";
+
+    GBM_BACKEND = "nvidia-drm";
+    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+    LIBVA_DRIVER_NAME = "nvidia";
+    NVD_BACKEND = "direct";
+  };
+
 }

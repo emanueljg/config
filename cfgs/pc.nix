@@ -33,6 +33,7 @@
     somebar
     someblocks
     wlock
+    wayland-env
 
     # multimedia
     mpv

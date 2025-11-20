@@ -34,6 +34,7 @@
     hw.getsuga
     hw.nvidia
     swapfiles."32GiB"
+    randr-scripts.getsuga
 
     nixos-rebuild.getsuga
 
