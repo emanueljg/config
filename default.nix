@@ -8,12 +8,9 @@ in
   disko-module ? sources.disko-module,
   getsuga-legion-module ? sources.getsuga-legion-module,
 
-  nixpkgsHyprland ? sources.nixpkgsHyprland,
-
   lib ? import "${nixpkgs}/lib",
 }:
 lib.fix (self: {
-  inherit nixpkgsHyprland;
   sourceModules = {
     sops-nix = sops-nix-module;
     disko = disko-module;
@@ -27,7 +24,6 @@ lib.fix (self: {
       modules
       configs
       sourceModules
-      nixpkgsHyprland
       ;
   };
 
