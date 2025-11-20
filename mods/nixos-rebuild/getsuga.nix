@@ -5,12 +5,12 @@
       {
         name = "getsuga";
         key = "dg";
-        cmd = "sudo nixos-rebuild switch --flake .#getsuga";
+        cmd = "sudo nixos-rebuild switch --attr nixosConfigurations.getsuga";
       }
       {
         name = "void";
         key = "dv";
-        cmd = "nixos-rebuild switch --flake .#void --target-host 'ejg@void' --sudo";
+        cmd = "nixos-rebuild switch --attr .nixosConfigurations.void --target-host 'ejg@void' --sudo";
       }
     ];
   };
