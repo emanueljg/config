@@ -17,7 +17,6 @@
     local
     keyboard
     enable-flakes
-    garnix
     pkgs
     swedish-locale
     user
