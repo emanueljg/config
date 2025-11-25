@@ -7,15 +7,12 @@
     ./lan.nix
     ./yt-dlp.nix
     ./qutebrowser.nix
-    ./hyprpaper.nix
     ./packages.nix
     ./kitty.nix
     ./cursor.nix
     ./helix.nix
     ./nixos-rebuild.nix
-    ./xwayland.nix
     ./wg.nix
-    ./hyprland.nix
     ./wrap.nix
     ./themes.nix
     ./greetd.nix

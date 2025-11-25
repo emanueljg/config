@@ -116,27 +116,27 @@ let
 in
 {
 
-  local.services.hyprpaper = {
-    enable = true;
-    settings = {
-      splash = false;
-      preload = lib.pipe papes [
-        builtins.attrValues
-        (map (builtins.toString))
-      ];
-      wallpaper = [
-        # front
-        # "DP-2,${papes.corpo-front}"
-        "DP-2,${papes.youmu-wind}"
+  # local.services.hyprpaper = {
+  #   enable = true;
+  #   settings = {
+  #     splash = false;
+  #     preload = lib.pipe papes [
+  #       builtins.attrValues
+  #       (map (builtins.toString))
+  #     ];
+  #     wallpaper = [
+  #       # front
+  #       # "DP-2,${papes.corpo-front}"
+  #       "DP-2,${papes.youmu-wind}"
 
-        # left
-        # "DP-1,${papes.corpo-left}"
-        "DP-1,${papes.konosuba-megumin-field}"
+  #       # left
+  #       # "DP-1,${papes.corpo-left}"
+  #       "DP-1,${papes.konosuba-megumin-field}"
 
-        # laptop
-        # "eDP-1,${papes.corpo-laptop}"
-        "eDP-1,${papes.bleach-frisbee}"
-      ];
-    };
-  };
+  #       # laptop
+  #       # "eDP-1,${papes.corpo-laptop}"
+  #       "eDP-1,${papes.bleach-frisbee}"
+  #     ];
+  #   };
+  # };
 }
