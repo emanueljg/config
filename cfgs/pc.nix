@@ -26,12 +26,10 @@
     weather-script
 
     # wayland
-    dwl
+    river-classic
     waybar
     wmenu
     wl-clipboard
-    somebar
-    someblocks
     wlock
     wayland-env
     wlr-randr

@@ -10,6 +10,7 @@
   ]
   ++ (with modules; [
     nixpkgs-var
+    nix-helpers
     hw.libinput
     hw.efi-grub
     wrap

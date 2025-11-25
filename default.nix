@@ -11,6 +11,7 @@ in
   lib ? import "${nixpkgs}/lib",
 }:
 lib.fix (self: {
+  inherit nixpkgs;
   sourceModules = {
     sops-nix = sops-nix-module;
     disko = disko-module;

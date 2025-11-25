@@ -24,23 +24,27 @@
           transition-property: none;
         }
 
-        #workspaces button {
+        #tags button {
             border-radius: 0;
             border: none;
-            color: ${fg.statusline1}
+            padding: 0px 10px 0px 11px;
+            min-width: 0px;
+            color: ${fg.statusline1};
+            transition: none;
         }
 
-        #workspaces button.visible {
+        #tags button.focused {
             background-color: ${bg.bg_green};
         }
           
-        #workspaces button.active {
+        #tags button.focused.output {
             color: ${bg.bg0};
             background-color: ${fg.statusline1};
         }
 
         #network {
             margin-right: 40px;
+            margin-left: 20px;
         }
 
         #battery {
@@ -87,8 +91,6 @@
     settings =
       let
         mods = {
-          workspaces = "hyprland/workspaces";
-          window = "hyprland/window";
           battery = "battery";
           clock = "clock";
           audio = "pulseaudio";
@@ -115,7 +117,7 @@
           margin-left = margin;
           margin-bottom = margin;
           margin-right = margin;
-          modules-left = [ mods.workspaces ];
+          modules-left = [ "river/tags" ];
           modules-center = [ mods.clock ];
           modules-right = [
             mods.network
@@ -123,32 +125,47 @@
             mods.battery
           ];
 
-          ${mods.workspaces} = {
-            disable-scroll = true;
-            persistent-workspaces = {
-              "DP-2" = [
-                1
-                2
-                3
-                4
-              ];
-              "DP-1" = [
-                5
-                6
-                7
-                8
-              ];
-              "eDP-1" = [ 9 ];
-              "HDMI-A-1" = [ 10 ];
-            };
+          "river/tags" = {
+            tag-labels = [
+              "1"
+              "2"
+              "3"
+              "4"
+              "5"
+              "6"
+              "7"
+              "8"
+              "9"
+            ];
           };
 
-          ${mods.window} = {
-            seperate-outputs = true;
-          };
+          # ${mods.workspaces} = {
+          #   disable-scroll = true;
+          #   persistent-workspaces = {
+          #     "DP-2" = [
+          #       1
+          #       2
+          #       3
+          #       4
+          #     ];
+          #     "DP-1" = [
+          #       5
+          #       6
+          #       7
+          #       8
+          #     ];
+          #     "eDP-1" = [ 9 ];
+          #     "HDMI-A-1" = [ 10 ];
+          #   };
+          # };
+
+          # ${mods.window} = {
+          #   seperate-outputs = true;
+          # };
 
           ${mods.clock} = {
-            format = "{:L%H:%M | %A, %d %b | week %g}";
+            format = "{:L%F %R}";
+            # format = "{:L%H:%M | %A, %d %b | week %g}";
             locale = "sv_SE.UTF-8";
           };
 

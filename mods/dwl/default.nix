@@ -17,11 +17,22 @@
     enable = true;
     package = (
       pkgs.dwl.overrideAttrs (prev: {
+        src = pkgs.fetchFromGitea {
+          domain = "codeberg.org";
+          owner = "dwl";
+          repo = "dwl";
+          rev = "main";
+          hash = "sha256-ihxF9Z4uT0K3omO4mbzkeICY/RyqvuD+C5JSGWIf6MI=";
+        };
         patches = (prev.patches or [ ]) ++ [
-          (pkgs.fetchpatch {
-            url = "https://codeberg.org/dwl/dwl-patches/raw/branch/main/patches/monitorconfig/monitorconfig.patch";
-            hash = "sha256-BVgbQkIr9m3OLZxcghYAnOK15TJTS/C/ozgX74Shm/A=";
-          })
+          # (pkgs.fetchpatch {
+          #   url = "https://codeberg.org/dwl/dwl-patches/raw/branch/main/patches/unclutter/unclutter.patch";
+          #   hash = "sha256-4i4QLJVOrGkKd3HhNykrKwV/cftlo5ctcDdo4J7IOHI=";
+          # })
+          # (pkgs.fetchpatch {
+          #   url = "https://codeberg.org/dwl/dwl-patches/raw/branch/main/patches/warpcursor/warpcursor.patch";
+          #   hash = "sha256-0AGMq507WmW2QJW02u6eJDuQmGBAiVPbEw79npwqEDU=";
+          # })
         ];
         postPatch =
           let
