@@ -15,7 +15,7 @@
     # core
     networkmanager
     pavucontrol
-    hw.bluetooth
+    bluetooth
     greetd
     pipewire
 
