@@ -11,7 +11,7 @@
   ++ (with modules; [
     nixpkgs-var
     nix-helpers
-    hw.efi-grub
+    efi-grub
     wrap
     local
     keyboard
