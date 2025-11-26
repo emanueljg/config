@@ -17,7 +17,7 @@
     sourceModules.getsuga-legion
     disks.getsuga
     hw.getsuga
-    hw.nvidia
+    nvidia
     swapfiles."32GiB"
     randr-scripts.getsuga
 
