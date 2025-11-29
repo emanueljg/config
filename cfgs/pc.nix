@@ -26,6 +26,7 @@
     weather-script
 
     # wayland
+    uwsm
     river-classic
     waybar
     wmenu
@@ -33,6 +34,7 @@
     wlock
     wayland-env
     wlr-randr
+    fnott
 
     # multimedia
     mpv

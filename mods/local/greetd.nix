@@ -14,7 +14,8 @@ in
 
     tuigreet = {
       cmd = lib.mkOption {
-        type = lib.types.str;
+        type = with lib.types; nullOr str;
+        default = null;
       };
       extraOptions = lib.mkOption {
         type = with lib.types; attrsOf anything;

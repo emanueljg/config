@@ -30,6 +30,8 @@ in
       };
     };
 
+    addToUWSM = lib.mkEnableOption "river-classic UWSM support";
+
   };
 
   config = lib.mkIf cfg.enable {
@@ -52,6 +54,12 @@ in
         '';
       })
     ];
+
+    programs.uwsm.waylandCompositors."river-classic" = lib.mkIf cfg.addToUWSM {
+      prettyName = "river-classic";
+      comment = "local uwsm";
+      binPath = "/run/current-system/sw/bin/river-start";
+    };
 
   };
 }

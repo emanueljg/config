@@ -43,13 +43,17 @@ in
         "tray.target"
       ];
 
+      restartIfChanged = true;
+
       unitConfig.ConditionEnvironment = "WAYLAND_DISPLAY";
+
+      path = [ config.local.wrap.wraps."waybar".finalPackage ];
 
       serviceConfig = {
         ExecReload = "${pkgs.coreutils}/bin/kill -SIGUSR2 $MAINPID";
         ExecStart = lib.getExe config.local.wrap.wraps."waybar".finalPackage;
         KillMode = "mixed";
-        Restart = "on-failure";
+        # Restart = "on-failure";
       };
 
     };

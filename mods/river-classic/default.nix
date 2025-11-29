@@ -1,6 +1,5 @@
 {
   lib,
-  config,
   ...
 }:
 {
@@ -8,10 +7,9 @@
     ../local/river-classic
   ];
 
-  local.greetd.tuigreet.cmd = "river-start";
-
   local.river-classic = {
     enable = true;
+    addToUWSM = true;
     init.text = lib.mkForce (
       builtins.foldl' (
         acc: elem:
