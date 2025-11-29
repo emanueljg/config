@@ -1,17 +1,16 @@
-let
-  sources = import ./sources.nix;
-in
 {
+  sources ? import ./sources.nix;
+
   nixpkgs ? sources.nixpkgs,
+  lib ? import "${nixpkgs}/lib",
 
   sops-nix-module ? sources.sops-nix-module,
   disko-module ? sources.disko-module,
   getsuga-legion-module ? sources.getsuga-legion-module,
-
-  lib ? import "${nixpkgs}/lib",
 }:
 lib.fix (self: {
   inherit nixpkgs;
+
   sourceModules = {
     sops-nix = sops-nix-module;
     disko = disko-module;
@@ -19,6 +18,7 @@ lib.fix (self: {
   };
 
   modules = import ./mods { inherit lib; };
+
   configs = import ./cfgs {
     inherit lib;
     inherit (self)
