@@ -35,6 +35,7 @@
     wayland-env
     wlr-randr
     fnott
+    kanshi
 
     # multimedia
     mpv
