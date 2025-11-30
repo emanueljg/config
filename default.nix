@@ -1,5 +1,5 @@
 {
-  sources ? import ./sources.nix;
+  sources ? import ./sources.nix,
 
   nixpkgs ? sources.nixpkgs,
   lib ? import "${nixpkgs}/lib",
