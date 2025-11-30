@@ -164,7 +164,7 @@
           # };
 
           ${mods.clock} = {
-            format = "{:L%F %R boob}";
+            format = "{:L%F %R}";
             # format = "{:L%H:%M | %A, %d %b | week %g}";
             locale = "sv_SE.UTF-8";
           };
