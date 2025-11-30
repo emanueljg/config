@@ -31,31 +31,17 @@ in
         "waybar/config" = builtins.toJSON (builtins.attrValues cfg.settings);
         "waybar/style.css" = cfg.style;
       };
+      postWrap = ''
+        mv $out/lib/systemd/user/waybar.service \
+           $out/lib/systemd/user/waybar.service.upstream
+        substitute $out/lib/systemd/user/waybar.service.upstream \
+                   $out/lib/systemd/user/waybar.service \
+          --replace-fail 'ExecStart=${lib.getExe cfg.package}' \
+                         "ExecStart=$out/bin/waybar"
+        rm $out/lib/systemd/user/waybar.service.upstream
+      '';
     };
-    systemd.user.services.waybar = {
-      partOf = [
-        "graphical-session.target"
-        "tray.target"
-      ];
-      after = [ "graphical-session.target" ];
-      wantedBy = [
-        "graphical-session.target"
-        "tray.target"
-      ];
 
-      restartIfChanged = true;
-
-      unitConfig.ConditionEnvironment = "WAYLAND_DISPLAY";
-
-      path = [ config.local.wrap.wraps."waybar".finalPackage ];
-
-      serviceConfig = {
-        ExecReload = "${pkgs.coreutils}/bin/kill -SIGUSR2 $MAINPID";
-        ExecStart = lib.getExe config.local.wrap.wraps."waybar".finalPackage;
-        KillMode = "mixed";
-        # Restart = "on-failure";
-      };
-
-    };
+    systemd.packages = [ config.local.wrap.wraps."waybar".finalPackage ];
   };
 }
