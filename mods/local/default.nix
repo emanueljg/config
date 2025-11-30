@@ -8,7 +8,6 @@
     ./yt-dlp.nix
     ./qutebrowser.nix
     ./packages.nix
-    ./kitty.nix
     ./cursor.nix
     ./helix.nix
     ./nixos-rebuild.nix

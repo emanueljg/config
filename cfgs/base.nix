@@ -32,7 +32,7 @@
     gpg
     helix
     zsh
-    kitty
+    foot
     themes
   ]);
 

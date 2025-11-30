@@ -1,7 +1,7 @@
 {
   imports = [
     ./helix.nix
-    ./kitty.nix
+    ./foot.nix
     ./waybar.nix
     ./qutebrowser.nix
     ./qb-help.nix
