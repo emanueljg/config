@@ -34,7 +34,7 @@
     wlock
     wayland-env
     wlr-randr
-    fnott
+    mako
     kanshi
 
     # multimedia
