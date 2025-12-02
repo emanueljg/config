@@ -72,5 +72,21 @@ in
         '') cfg.profiles}
       '';
     };
+
+    systemd.user.services."kanshi" = {
+      description = "Dynamic output configuration for Wayland compositors";
+      documentation = [ "https://gitlab.freedesktop.org/emersion/kanshi" ];
+
+      wantedBy = [ "graphical-session.target" ];
+      partOf = [ "graphical-session.target" ];
+      after = [ "graphical-session.target" ];
+      requisite = [ "graphical-session.target" ];
+
+      serviceConfig = {
+        ExecStart = lib.getExe config.local.wrap.wraps."kanshi".finalPackage;
+        ExecReload = "kill -SIGHUP $MAINPID";
+        Restart = "on-failure";
+      };
+    };
   };
 }
