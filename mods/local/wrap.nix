@@ -203,12 +203,15 @@ in
 
                             find -L \
                               $out \
-                              -path "$out/lib/systemd/*" \
+                              \( \
+                                -path "$out/lib/systemd/*" \
+                                -o -path "$out/share/dbus-1/services/*" \
+                              \) \
                               -type f \
                               -execdir bash -c '
                                 mv $0 $0.tmp
                                 substitute {}.tmp {} \
-                                  --replace-fail '${wrappedPkg}' \
+                                  --replace-quiet '${wrappedPkg}' \
                                                  "$out"
                                 rm $0.tmp
                               ' {} \;

@@ -72,5 +72,5 @@ riverctl rule-add -app-id "bar" csd
 # River will send the process group of the init executable SIGTERM on exit.
 riverctl default-layout rivertile
 
-rivertile -view-padding 6 -outer-padding 6 &
+runapp rivertile -view-padding 6 -outer-padding 6 &
 

@@ -4,7 +4,8 @@
   local.kanshi =
     let
       # computer screen
-      eDP-1 = "BOE 0x0B38 0x0000000";
+      # eDP-1 = "BOE 0x0B38 0x0000000";
+      eDP-1 = "eDP-1";
 
       # front
       DP-2-home = "ASUSTek COMPUTER INC VG258 L6LMQS111772";
@@ -38,7 +39,10 @@
       profiles = {
         "nomad".outputs."${eDP-1}" = [ ];
         "home-desk".outputs = {
-          ${DP-1-home} = [ ];
+          ${DP-1-home} = [
+            "position"
+            "0,0"
+          ];
           ${DP-2-home} = [
             "position"
             "1080,0"

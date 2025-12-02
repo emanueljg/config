@@ -27,6 +27,7 @@
 
     # wayland
     uwsm
+    runapp
     river-classic
     waybar
     wmenu
