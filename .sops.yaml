@@ -28,3 +28,11 @@ creation_rules:
       - *ejg_getsuga
       - *host_getsuga
       - *host_void
+
+  - path_regex: mods/rmapi/sops.yml
+    key_groups:
+    - age:
+      - *ejg_void
+      - *ejg_getsuga
+      - *host_getsuga
+

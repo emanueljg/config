@@ -23,15 +23,6 @@ in
       bins."mako".flags."--config".path = lib.mkIf (cfg.settings != { }) (
         lib.concatMapAttrsStringSep "\n" (n: v: "${n}=${builtins.toString v}") cfg.settings
       );
-      postWrap = ''
-        mv $out/lib/systemd/user/mako.service \
-           $out/lib/systemd/user/mako.service.upstream
-        substitute $out/lib/systemd/user/mako.service.upstream \
-                   $out/lib/systemd/user/mako.service \
-          --replace-fail 'ExecStart=${lib.getExe cfg.package}' \
-                         "ExecStart=$out/bin/mako"
-        rm $out/lib/systemd/user/mako.service.upstream
-      '';
     };
   };
 }

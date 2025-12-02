@@ -146,6 +146,10 @@ in
                 type = lib.types.lines;
                 default = "";
               };
+              doSystemdUnitFix = lib.mkOption {
+                type = lib.types.bool;
+                default = true;
+              };
               override = lib.mkOption {
                 type =
                   with lib.types;
@@ -192,6 +196,23 @@ in
                           ${wraps.config.preWrap}
 
                           ${lib.concatMapAttrsStringSep "\n" (_: bin: bin.finalWrapperText) wraps.config.bins}
+
+                          ${lib.optionalString wraps.config.doSystemdUnitFix ''
+                            # subshell can't find wrapper funcs otherwise
+                            export -f substitute consumeEntire substituteStream
+
+                            find -L \
+                              $out \
+                              -path "$out/lib/systemd/*" \
+                              -type f \
+                              -execdir bash -c '
+                                mv $0 $0.tmp
+                                substitute {}.tmp {} \
+                                  --replace-fail '${wrappedPkg}' \
+                                                 "$out"
+                                rm $0.tmp
+                              ' {} \;
+                          ''}
 
                           ${wraps.config.postWrap}
                         '';

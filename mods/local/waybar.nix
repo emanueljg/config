@@ -31,15 +31,6 @@ in
         "waybar/config" = builtins.toJSON (builtins.attrValues cfg.settings);
         "waybar/style.css" = cfg.style;
       };
-      postWrap = ''
-        mv $out/lib/systemd/user/waybar.service \
-           $out/lib/systemd/user/waybar.service.upstream
-        substitute $out/lib/systemd/user/waybar.service.upstream \
-                   $out/lib/systemd/user/waybar.service \
-          --replace-fail 'ExecStart=${lib.getExe cfg.package}' \
-                         "ExecStart=$out/bin/waybar"
-        rm $out/lib/systemd/user/waybar.service.upstream
-      '';
     };
 
     systemd.packages = [ config.local.wrap.wraps."waybar".finalPackage ];
