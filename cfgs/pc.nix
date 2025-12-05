@@ -14,7 +14,7 @@
 
     # core
     networkmanager
-    pavucontrol
+    wiremix
     bluetooth
     greetd
     pipewire

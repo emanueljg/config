@@ -196,7 +196,6 @@
             };
 
             on-click = "${lib.getExe pkgs.playerctl} play-pause";
-            on-click-right = lib.getExe pkgs.pavucontrol;
           };
 
           ${mods.audioSlider} = { };

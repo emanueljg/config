@@ -35,7 +35,7 @@
         )
         ''
           set -x
-          systemctl --user import-environment DISPLAY WAYLAND_DISPLAY
+          systemctl --user import-environment DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP          
         ''
         (builtins.attrNames (builtins.readDir ./.))
     );
