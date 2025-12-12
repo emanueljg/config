@@ -1,4 +1,9 @@
 {
+  pkgs,
+  lib,
+  ...
+}:
+{
   imports = [ ./local/kanshi.nix ];
 
   local.kanshi =
@@ -12,10 +17,28 @@
 
       # left vertical
       DP-1-home = "ASUSTek COMPUTER INC VG258 L6LMQS112078";
+
+      muse-dash = lib.fix (
+        self:
+        (pkgs.runCommand "wallhaven-kxpkoq.png"
+          {
+            src = pkgs.fetchurl {
+              url = "https://w.wallhaven.cc/full/kx/wallhaven-kxpkoq.png";
+              hash = "sha256-nzVK/UQDPw9xCjeLvQmXOLpmzILp/fcUwfE7NFVZiOg=";
+            };
+            nativeBuildInputs = [ pkgs.imagemagick ];
+          }
+          ''
+            magick ${self.src} \
+              -crop 2560x1600+400+200 \
+              $out
+          ''
+        )
+      );
     in
     {
       enable = true;
-      outputs = {
+      output = {
         ${eDP-1} = [
           "mode"
           "2560x1600@165.001999"
@@ -36,9 +59,14 @@
         ];
       };
 
-      profiles = {
-        "nomad".outputs."${eDP-1}" = [ ];
-        "home-desk".outputs = {
+      profile = {
+        "nomad" = {
+          output."${eDP-1}" = [ ];
+          exec = [
+            "${lib.getExe pkgs.swaybg} --image ${muse-dash} -m center"
+          ];
+        };
+        "home-desk".output = {
           ${DP-1-home} = [
             "position"
             "0,0"

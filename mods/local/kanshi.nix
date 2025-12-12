@@ -7,7 +7,7 @@
 let
   cfg = config.local.kanshi;
 
-  outputs = lib.mkOption {
+  outputOption = lib.mkOption {
     default = { };
     type =
       with lib.types;
@@ -27,9 +27,11 @@ let
           type = lib.types.str;
           default = name;
         };
-        inherit outputs;
-        # I don't use this
-        # exec = lib.mkOption {
+        output = outputOption;
+        exec = lib.mkOption {
+          type = with lib.types; listOf str;
+          default = [ ];
+        };
       };
     }
   );
@@ -49,9 +51,9 @@ in
     enable = lib.mkEnableOption "kanshi";
     package = lib.mkPackageOption pkgs "kanshi" { };
 
-    inherit outputs;
+    output = outputOption;
 
-    profiles = lib.mkOption {
+    profile = lib.mkOption {
       default = { };
       type = lib.types.attrsOf profileType;
     };
@@ -62,15 +64,18 @@ in
     local.wrap.wraps."kanshi" = {
       pkg = cfg.package;
       systemPackages = true;
-      bins."kanshi".flags."--config".path = ''
-        ${mkOutputDirectives "\n" cfg.outputs}
+      bins."kanshi".flags = {
+        "--config".path = ''
+          ${mkOutputDirectives "\n" cfg.output}
 
-        ${lib.concatMapAttrsStringSep "\n" (profile: directives: ''
-          profile "${profile}" {
-            ${mkOutputDirectives "\n  " directives.outputs} 
-          } 
-        '') cfg.profiles}
-      '';
+          ${lib.concatMapAttrsStringSep "\n" (profile: directives: ''
+            profile "${profile}" {
+              ${mkOutputDirectives "\n  " directives.output} 
+              ${lib.concatMapStringsSep "\n  " (exec: "exec ${exec}") directives.exec} 
+            } 
+          '') cfg.profile}
+        '';
+      };
     };
 
     systemd.user.services."kanshi" = {
@@ -83,7 +88,7 @@ in
       requisite = [ "graphical-session.target" ];
 
       serviceConfig = {
-        ExecStart = lib.getExe config.local.wrap.wraps."kanshi".finalPackage;
+        ExecStart = "${lib.getExe config.local.wrap.wraps."kanshi".finalPackage}";
         ExecReload = "kill -SIGHUP $MAINPID";
         Restart = "on-failure";
       };

@@ -5,13 +5,13 @@
   ...
 }:
 let
-  cfg = config.local.services.hyprpaper;
+  cfg = config.local.services.swaybg;
 in
 {
 
-  options.local.services.hyprpaper = {
+  options.local.services.swaybg = {
     enable = lib.mkEnableOption "";
-    package = lib.mkPackageOption pkgs "hyprpaper" { };
+    package = lib.mkPackageOption pkgs "swaybg" { };
     settings = lib.mkOption {
       type = with lib.types; attrsOf anything;
       default = { };
@@ -20,14 +20,14 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    local.wrap.wraps."hyprpaper" = {
+    local.wrap.wraps."swaybg" = {
       pkg = cfg.package;
-      bins."hyprpaper".envs."XDG_CONFIG_HOME".paths = {
-        "hypr/hyprpaper.conf" = config.local.lib.toHyprConf { attrs = cfg.settings; };
+      bins."swaybg".envs."XDG_CONFIG_HOME".paths = {
+        "hypr/swaybg.conf" = config.local.lib.toHyprConf { attrs = cfg.settings; };
       };
     };
 
-    systemd.user.services.hyprpaper = {
+    systemd.user.services.swaybg = {
       wantedBy = [ "graphical-session.target" ];
       after = [ "graphical-session.target" ];
       partOf = [ "graphical-session.target" ];
@@ -35,7 +35,7 @@ in
       unitConfig.ConditionEnvironment = "WAYLAND_DISPLAY";
 
       serviceConfig = {
-        ExecStart = lib.getExe config.local.wrap.wraps."hyprpaper".finalPackage;
+        ExecStart = lib.getExe config.local.wrap.wraps."swaybg".finalPackage;
         Restart = "always";
         RestartSec = "10";
       };
