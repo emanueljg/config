@@ -27,6 +27,7 @@
 
     # gaming
     obs
+    steam
 
     # development
     docker
