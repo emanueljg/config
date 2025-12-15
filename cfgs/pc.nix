@@ -24,6 +24,7 @@
     qutebrowser
     tor-browser
     weather-script
+    neomutt
 
     # wayland
     uwsm
