@@ -21,6 +21,10 @@ let
               default = { };
               type = with lib.types; attrsOf anything;
             };
+            verbatim = lib.mkOption {
+              type = with lib.types; nullOr str;
+              default = null;
+            };
             path = lib.mkOption {
               default = null;
               type = with lib.types; nullOr (either str path);
@@ -65,9 +69,13 @@ let
               };
             };
             finalOutput = lib.mkOption {
-              type = lib.types.package;
+              type = with lib.types; either str package;
               readOnly = true;
-              default = if args.config.finalPath != null then args.config.finalPath else args.config.finalDir;
+              default = lib.findFirst (x: x != null) null [
+                args.config.verbatim
+                args.config.finalPath
+                args.config.finalDir
+              ];
             };
           };
         }

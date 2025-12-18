@@ -25,6 +25,7 @@
     tor-browser
     weather-script
     neomutt
+    aerc
 
     # wayland
     uwsm

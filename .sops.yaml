@@ -36,3 +36,9 @@ creation_rules:
       - *ejg_getsuga
       - *host_getsuga
 
+  - path_regex: mods/aerc/sops-accounts.ini
+    key_groups:
+    - age:
+      - *ejg_getsuga
+      - *host_getsuga
+
