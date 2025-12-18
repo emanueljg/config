@@ -12,9 +12,6 @@ let
     type = lib.types.nullOr settingsFormat.type;
     default = null;
   };
-
-  needsAWrapper =
-    cfg.aercSettings != null || cfg.bindsSettings != null || cfg.accountsSettings != null;
 in
 {
   options.local.aerc = {
@@ -30,12 +27,17 @@ in
       type = with lib.types; nullOr str;
       default = null;
     };
+
+    needsAWrapper = lib.mkOption {
+      type = lib.types.bool;
+      default = cfg.aercSettings != null || cfg.bindsSettings != null || cfg.accountsSettings != null;
+    };
   };
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = lib.optional (!needsAWrapper) cfg.package;
+    environment.systemPackages = lib.optional (!cfg.needsAWrapper) cfg.package;
 
-    local.wrap.wraps = lib.mkIf needsAWrapper {
+    local.wrap.wraps = lib.mkIf cfg.needsAWrapper {
       "aerc" = {
         pkg = cfg.package;
         systemPackages = true;
