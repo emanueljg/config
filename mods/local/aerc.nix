@@ -64,7 +64,7 @@ in
 
           # stylesets
           // lib.optionalAttrs (cfg.stylesets != null) (builtins.mapAttrs (n: v: 
-            envs."XDG_CONFIG_HOME".paths."aerc/stylesets/${n}" = v) cfg.stylesets
+            { envs."XDG_CONFIG_HOME".paths."aerc/stylesets/${n}" = v; }) cfg.stylesets
           ) 
 
           # accounts.conf (secret out-of-store file arg
