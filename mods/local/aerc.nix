@@ -28,9 +28,18 @@ in
       default = null;
     };
 
+    stylesets = lib.mkOption {
+      type = with lib.types; nullOr (either attrsOf str);
+    };
+
     needsAWrapper = lib.mkOption {
       type = lib.types.bool;
-      default = cfg.aercSettings != null || cfg.bindsSettings != null || cfg.accountsSettings != null;
+      default = builtins.any builtins.isNull [
+        cfg.aercSettings
+        cfg.bindsSettings
+        cfg.accountsSettings
+        cfg.stylesets
+      ];
     };
   };
 
@@ -41,18 +50,28 @@ in
       "aerc" = {
         pkg = cfg.package;
         systemPackages = true;
-        bins."aerc".flags =
-          lib.optionalAttrs (cfg.aercSettings != null) {
-            "--aerc-conf".path = settingsFormat.generate "aerc.conf" cfg.aercSettings;
-          }
-          // lib.optionalAttrs (cfg.bindsSettings != null) {
-            "--binds-conf".path = settingsFormat.generate "binds.conf" cfg.bindsSettings;
-          }
-          // lib.optionalAttrs (cfg.accountsConfPath != null) {
-            "--accounts-conf".verbatim = cfg.accountsConfPath;
-          };
-      };
+        bins."aerc" =
 
+          # aerc.conf
+          lib.optionalAttrs (cfg.aercSettings != null) {
+            envs."XDG_CONFIG_HOME".paths."aerc/aerc.conf" = settingsFormat.generate "aerc.conf" cfg.aercSettings;
+          } 
+
+          # binds.conf
+          // lib.optionalAttrs (cfg.bindsSettings != null) {
+            envs."XDG_CONFIG_HOME".paths."aerc/binds.conf" = settingsFormat.generate "binds.conf" cfg.bindsSettings;
+          } 
+
+          # stylesets
+          // lib.optionalAttrs (cfg.stylesets != null) (builtins.mapAttrs (n: v: 
+            envs."XDG_CONFIG_HOME".paths."aerc/stylesets/${n}" = v) cfg.stylesets
+          ) 
+
+          # accounts.conf (secret out-of-store file arg
+          // lib.optionalAttrs (cfg.accountsConfPath != null) {
+            flags."--accounts-conf".verbatim = cfg.accountsConfPath;
+          }; 
+      };
     };
   };
 }
