@@ -26,6 +26,7 @@
     weather-script
     neomutt
     aerc
+    isync
 
     # wayland
     uwsm
@@ -55,5 +56,7 @@
     cursor
     fontconfig
     add-headphones-script
+
+    udisks2-and-udiskie
   ]);
 }

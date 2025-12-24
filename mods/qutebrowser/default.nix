@@ -55,6 +55,8 @@
       "url.default_page" = "http://localhost";
       "url.start_pages" = "http://localhost";
       "url.open_base_url" = true;
+      "new_instance_open_target" = "window";
+      "content.local_content_can_access_remote_urls" = true;
     };
   };
 }

@@ -5,8 +5,8 @@
     type = "github";
     owner = "nixos";
     repo = "nixpkgs";
-    rev = "2fad6eac6077f03fe109c4d4eb171cf96791faa4";
-    narHash = "sha256-sKoIWfnijJ0+9e4wRvIgm/HgE27bzwQxcEmo2J/gNpI=";
+    rev = "511adc4827527cc69ddead8619bae4c35d3da1a2";
+    narHash = "sha256-j03Q0XEFtD3ZCqRCY228hvSA44RdzQcILweTCignWCo=";
   };
 
   sops-nix-module = "${

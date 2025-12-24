@@ -6,10 +6,8 @@
       lfs.enable = true;
       config = {
         init.defaultBranch = "main";
-        user = {
-          email = "emanueljohnsongodin@gmail.com";
-          name = "emanueljg";
-        };
+        commit.gpgsign = true;
+        tag.gpgSign = true;
       };
     };
   };

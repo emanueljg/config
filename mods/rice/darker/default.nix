@@ -10,5 +10,6 @@
     ./gtk.nix
     ./fonts.nix
     ./river-classic.nix
+    ./aerc.nix
   ];
 }

@@ -34,6 +34,8 @@
     zsh
     foot
     themes
+    fzf-preview
+    print-colors
   ]);
 
   _file = ./base.nix;
