@@ -40,6 +40,7 @@
     wlr-randr
     mako
     kanshi
+    lsix
 
     # multimedia
     mpv
