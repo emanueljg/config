@@ -1,44 +1,36 @@
 # Also see https://github.com/Mic92/dotfiles/blob/master/nixos/.sops.yaml
 # for a more complex example.
 keys:
-  - &host_void age1ws2gphsp0qwzpw24j3wkmtgfz7e2cfhmkzpu8xkruyzrxjd334yshj2843
+  - &emanueljg 5AB5C730CBDD2B97C2AA04F98732051107C3695E
+
   - &host_getsuga age148zsrhvarvtzlyhlt4yayrf9705jvpsntgjk6r5cvvg0c0qeu9rqf20wpd
-  - &ejg_void age1ley3ejf6c2m702wuqhnyzs26km3wm3l5ld6kzkpaqwqdccup9yysnv0d9u
-  - &ejg_getsuga age1t3rzvqumnm5mhgkp0qqgvcryxlcqs7h5337pnnfvemlljf0z5avqfzlnr5
 
 creation_rules:
-  - path_regex: mods/navidrome/sops.yml
-    key_groups:
-    - age:
-      - *ejg_void
-      - *ejg_getsuga
-      - *host_void
-
   - path_regex: mods/terraform/sops.yml
     key_groups:
-    - age:
-      - *ejg_void
-      - *ejg_getsuga
+    - pgp:
+      - *emanueljg
+      age:
       - *host_getsuga
 
   - path_regex: mods/access-tokens/sops.yml
     key_groups:
-    - age:
-      - *ejg_void
-      - *ejg_getsuga
+    - pgp:
+      - *emanueljg
+      age:
       - *host_getsuga
-      - *host_void
 
   - path_regex: mods/rmapi/sops.yml
     key_groups:
-    - age:
-      - *ejg_void
-      - *ejg_getsuga
+    - pgp:
+      - *emanueljg
+      age:
       - *host_getsuga
 
   - path_regex: mods/aerc/sops-accounts.ini
     key_groups:
-    - age:
-      - *ejg_getsuga
+    - pgp:
+      - *emanueljg
+      age:
       - *host_getsuga
 
