@@ -18,7 +18,7 @@ in
     systemd.user.services."udiskie" = {
       wantedBy = [ "default.target" ];
 
-      serviceConfig.ExecStart = lib.getExe cfg.package;
+      serviceConfig.ExecStart = lib.getExe' cfg.package "udiskie";
     };
   };
 }

@@ -1,7 +1,7 @@
 # Also see https://github.com/Mic92/dotfiles/blob/master/nixos/.sops.yaml
 # for a more complex example.
 keys:
-  - &emanueljg 5AB5C730CBDD2B97C2AA04F98732051107C3695E
+  - &emanueljg_getsuga 'F452E84F225E327236F968176C7D7B325A0F39FF!'
 
   - &host_getsuga age148zsrhvarvtzlyhlt4yayrf9705jvpsntgjk6r5cvvg0c0qeu9rqf20wpd
 
@@ -9,28 +9,35 @@ creation_rules:
   - path_regex: mods/terraform/sops.yml
     key_groups:
     - pgp:
-      - *emanueljg
+      - *emanueljg_getsuga
       age:
       - *host_getsuga
 
   - path_regex: mods/access-tokens/sops.yml
     key_groups:
     - pgp:
-      - *emanueljg
+      - *emanueljg_getsuga
       age:
       - *host_getsuga
 
   - path_regex: mods/rmapi/sops.yml
     key_groups:
     - pgp:
-      - *emanueljg
+      - *emanueljg_getsuga
       age:
       - *host_getsuga
 
   - path_regex: mods/aerc/sops-accounts.ini
     key_groups:
     - pgp:
-      - *emanueljg
+      - *emanueljg_getsuga
+      age:
+      - *host_getsuga
+
+  - path_regex: mods/private/.*/sops.yml
+    key_groups:
+    - pgp:
+      - *emanueljg_getsuga
       age:
       - *host_getsuga
 

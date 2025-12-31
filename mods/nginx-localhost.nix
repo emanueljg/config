@@ -8,11 +8,11 @@ _: {
 
   services.nginx = {
     enable = true;
-    virtualHosts."localhost".locations."/" = {
-      root = "/var/www";
-      extraConfig = ''
-        allow all;
-      '';
-    };
+    # virtualHosts."localhost".locations."/" = {
+    #   root = "/var/www";
+    #   extraConfig = ''
+    #     allow all;
+    #   '';
+    # };
   };
 }

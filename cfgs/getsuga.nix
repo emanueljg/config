@@ -36,6 +36,8 @@
     # misc. fixes
     network-wait-online-fix
 
+    private.getsuga
+
     stateversions."23-11"
   ]);
 
