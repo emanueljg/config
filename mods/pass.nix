@@ -5,7 +5,7 @@
       pkgs.pass
     ];
     sessionVariables = {
-      PASSWORD_STORE_DIR = "/home/ejg/.local/share/password-store";
+      PASSWORD_STORE_DIR = "/home/ejg/pass";
     };
     shellAliases = {
       "psl" = "pass list";
