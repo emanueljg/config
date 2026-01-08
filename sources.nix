@@ -1,12 +1,12 @@
 {
-  # last updated: 2025-11-30
+  # last updated: 2026-01-08
   # branch: nixos-unstable
   nixpkgs = builtins.fetchTree {
     type = "github";
     owner = "nixos";
     repo = "nixpkgs";
-    rev = "3e2499d5539c16d0d173ba53552a4ff8547f4539";
-    narHash = "sha256-QEhk0eXgyIqTpJ/ehZKg9IKS7EtlWxF3N7DXy42zPfU=";
+    rev = "5912c1772a44e31bf1c63c0390b90501e5026886";
+    narHash = "";
   };
 
   sops-nix-module = "${
