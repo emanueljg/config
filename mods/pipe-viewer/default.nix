@@ -12,8 +12,8 @@
         conf = pkgs.replaceVars ./pipe-viewer.conf {
           # lib stuff
           PERL = pkgs.perl;
-          PERL_TEST_POD = pkgs.perl540Packages.TestPod;
-          PERL_MODULE_BUILD = pkgs.perl540Packages.ModuleBuild;
+          PERL_TEST_POD = pkgs.perl5Packages.TestPod;
+          PERL_MODULE_BUILD = pkgs.perl5Packages.ModuleBuild;
           PIPE_VIEWER = pkgs.pipe-viewer;
 
           MPV = lib.getExe pkgs.mpv;
