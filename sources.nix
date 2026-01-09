@@ -6,7 +6,7 @@
     owner = "nixos";
     repo = "nixpkgs";
     rev = "5912c1772a44e31bf1c63c0390b90501e5026886";
-    narHash = "";
+    narHash = "sha256-Mj3d3PfwltLmukFal5i3fFt27L6NiKXdBezC1EBuZs4=";
   };
 
   sops-nix-module = "${
