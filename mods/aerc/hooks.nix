@@ -3,7 +3,7 @@
   local.aerc.aercSettings.hooks = {
     mail-received = lib.concatStringsSep " " [
       (lib.getExe' pkgs.libnotify "notify-send")
-      (lib.cli.toGNUCommandLineShell { } {
+      (lib.cli.toCommandLineShellGNU { } {
         app-name = "aerc";
         icon = pkgs.fetchurl {
           url = "https://git.sr.ht/~rjarry/aerc/blob/master/contrib/logo.svg";

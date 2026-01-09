@@ -27,7 +27,7 @@ in
     enable = true;
     useTextGreeter = true;
     settings.default_session.command = "${lib.getExe pkgs.tuigreet} ${
-      lib.cli.toGNUCommandLineShell { } (cfg.tuigreet.extraOptions // { inherit (cfg.tuigreet) cmd; })
+      lib.cli.toCommandLineShellGNU { } (cfg.tuigreet.extraOptions // { inherit (cfg.tuigreet) cmd; })
     }";
   };
 }
