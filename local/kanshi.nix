@@ -43,8 +43,6 @@
         ${eDP-1} = [
           "mode"
           "2560x1600@165.001999"
-          "scale"
-          2
         ];
 
         ${DP-2-home} = [
@@ -62,7 +60,10 @@
 
       profile = {
         "nomad" = {
-          output."${eDP-1}" = [ ];
+          output."${eDP-1}" = [
+            "scale"
+            1
+          ];
           exec = [
             "${lib.getExe pkgs.swaybg} --image ${muse-dash} -m center"
           ];
@@ -79,6 +80,8 @@
           ${eDP-1} = [
             "position"
             "3000,0"
+            "scale"
+            2
           ];
         };
       };
