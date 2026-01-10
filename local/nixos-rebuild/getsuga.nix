@@ -7,7 +7,7 @@
       {
         name = "getsuga";
         key = "dg";
-        cmd = "sudo nixos-rebuild switch --attr cfgs.getsuga";
+        cmd = "sudo nixos-rebuild switch --attr cfg.getsuga";
       }
       {
         name = "void";
