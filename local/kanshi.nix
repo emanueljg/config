@@ -19,23 +19,10 @@
       # left vertical
       DP-1-home = "ASUSTek COMPUTER INC VG258 L6LMQS112078";
 
-      muse-dash = lib.fix (
-        self:
-        (pkgs.runCommand "wallhaven-kxpkoq.png"
-          {
-            src = pkgs.fetchurl {
-              url = "https://w.wallhaven.cc/full/kx/wallhaven-kxpkoq.png";
-              hash = "sha256-nzVK/UQDPw9xCjeLvQmXOLpmzILp/fcUwfE7NFVZiOg=";
-            };
-            nativeBuildInputs = [ pkgs.imagemagick ];
-          }
-          ''
-            magick ${self.src} \
-              -crop 2560x1600+400+200 \
-              $out
-          ''
-        )
-      );
+      muse-dash = pkgs.fetchurl {
+        url = "https://w.wallhaven.cc/full/kx/wallhaven-kxpkoq.png";
+        hash = "sha256-nzVK/UQDPw9xCjeLvQmXOLpmzILp/fcUwfE7NFVZiOg=";
+      };
     in
     {
       enable = true;
@@ -62,7 +49,7 @@
         "nomad" = {
           output."${eDP-1}" = [
             "scale"
-            1
+            "1.5"
           ];
           exec = [
             "${lib.getExe pkgs.swaybg} --image ${muse-dash} -m center"
