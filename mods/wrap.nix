@@ -1,3 +1,0 @@
-{
-  local.wrap.enable = true;
-}

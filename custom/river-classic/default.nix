@@ -1,0 +1,65 @@
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+let
+  cfg = config.custom.programs.river-classic;
+in
+{
+  options.custom.programs.river-classic = {
+    enable = lib.mkEnableOption "river-classic";
+    package = lib.mkPackageOption pkgs "river-classic" { };
+
+    init = {
+      runtimeInputs = lib.mkOption {
+        default = [ cfg.package ];
+        type = with lib.types; listOf package;
+      };
+      text = lib.mkOption {
+        type = lib.types.lines;
+      };
+      _drv = lib.mkOption {
+        readOnly = true;
+        type = lib.types.package;
+        default = pkgs.writeShellApplication {
+          name = "river-cfg";
+          inherit (cfg.init) runtimeInputs text;
+        };
+      };
+    };
+
+    addToUWSM = lib.mkEnableOption "river-classic UWSM support";
+
+  };
+
+  config = lib.mkIf cfg.enable {
+    custom.programs.river-classic.init.text = ''
+      systemctl --user import-environment DISPLAY WAYLAND_DISPLAY
+      ${builtins.readFile ./init.sh}
+    '';
+
+    programs.river-classic = {
+      inherit (cfg) enable package;
+    };
+
+    environment.systemPackages = [
+      cfg.init._drv
+      (pkgs.writeShellApplication {
+        name = "river-start";
+        runtimeInputs = [ cfg.package ];
+        text = ''
+          river -c 'exec ${lib.getExe cfg.init._drv}'
+        '';
+      })
+    ];
+
+    programs.uwsm.waylandCompositors."river-classic" = lib.mkIf cfg.addToUWSM {
+      prettyName = "river-classic";
+      comment = "custom.programs uwsm";
+      binPath = "/run/current-system/sw/bin/river-start";
+    };
+
+  };
+}

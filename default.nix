@@ -8,29 +8,14 @@
   disko-module ? sources.disko-module,
   getsuga-legion-module ? sources.getsuga-legion-module,
 }:
-lib.fix (self: {
+{
   inherit nixpkgs;
 
-  sourceModules = {
-    sops-nix = sops-nix-module;
-    disko = disko-module;
-    getsuga-legion = getsuga-legion-module;
-  };
-
-  modules = import ./mods { inherit lib; };
-
-  configs = import ./cfgs {
-    inherit lib;
-    inherit (self)
-      modules
-      configs
-      sourceModules
-      ;
-  };
-
-  nixosConfigurations =
+  cfg =
     let
       eval-config = import "${nixpkgs}/nixos/lib/eval-config.nix";
+      importer = import ./importer.nix { inherit lib; };
+      cfg = importer { root = ./cfg; };
     in
     builtins.mapAttrs (
       _: v:
@@ -39,6 +24,20 @@ lib.fix (self: {
         # https://github.com/NixOS/nixpkgs/blob/bc820e509bacaf06dd07b5fc807d8756179df95b/nixos/lib/eval-config.nix#L12
         system = null;
         modules = [ v ];
+        specialArgs = {
+
+          inherit cfg;
+          partial = importer { root = ./partial; };
+          custom = importer { root = ./custom; };
+          local = importer { root = ./local; };
+
+          sourceModules = {
+            sops-nix = sops-nix-module;
+            disko = disko-module;
+            getsuga-legion = getsuga-legion-module;
+          };
+
+        };
       }
-    ) self.configs;
-})
+    ) cfg;
+}
