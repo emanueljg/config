@@ -19,7 +19,7 @@ You might have to enable the experimental feature that toggles
 
 The current configuration has the following uncommon qualities:
 
-### Not using flakes, not using npins.
+### Not using flakes, not using npins
 
 It doesn't use the now-famous
 [flake](https://www.tweag.io/blog/2020-05-25-flakes/) schema. It
@@ -34,7 +34,7 @@ reason other than minor UX (npins, niv or similar). Super simple to wrap your
 head around too, which is a bonus.
 
 
-### Very flat module list.
+### Very flat module list
 
 The overwhelming majority of NixOS configurations are matryoshka dolls; the
 host `alpha` may contain a directory `nixos`, which may contain directory
