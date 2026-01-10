@@ -9,7 +9,7 @@ and what didn`t work.
 ## Usage
 
 ```nix
-$ sudo nixos-rebuild switch --attr `nixosConfigurations.<hostname>`
+$ sudo nixos-rebuild switch --attr 'cfg.<hostname>'
 ```
 
 You might have to enable the experimental feature that toggles
