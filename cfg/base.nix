@@ -1,13 +1,13 @@
 {
   local,
-  sourceModules,
+  remote,
   custom,
   ...
 }:
 {
 
   imports = [
-    sourceModules.sops-nix
+    remote.sops-nix
     custom.wrap
   ]
   ++ (with local; [

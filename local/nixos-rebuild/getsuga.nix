@@ -12,7 +12,7 @@
       {
         name = "void";
         key = "dv";
-        cmd = "nixos-rebuild switch --attr .cfgs.void --target-host 'ejg@void' --sudo";
+        cmd = "nixos-rebuild switch --attr cfg.void --target-host 'ejg@void' --sudo";
       }
     ];
   };

@@ -7,7 +7,7 @@
       {
         name = "void";
         key = "dv";
-        cmd = "sudo nixos-rebuild switch --attr nixosConfigurations.void";
+        cmd = "sudo nixos-rebuild switch --attr cfg.void";
       }
     ];
   };

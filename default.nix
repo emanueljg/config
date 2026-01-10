@@ -31,7 +31,7 @@
           custom = importer { root = ./custom; };
           local = importer { root = ./local; };
 
-          sourceModules = {
+          remote = {
             sops-nix = sops-nix-module;
             disko = disko-module;
             getsuga-legion = getsuga-legion-module;

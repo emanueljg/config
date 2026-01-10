@@ -1,12 +1,13 @@
 {
   local,
-  sourceModules,
+  remote,
   cfg,
   ...
 }:
 {
   imports = [
     cfg.pc
+    remote.getsuga-legion
   ]
   ++ (with local; [
     # meta
@@ -14,7 +15,6 @@
     systems.x86_64-linux
 
     # hardware
-    sourceModules.getsuga-legion
     disks.getsuga
     hw.getsuga
     nvidia

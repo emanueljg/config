@@ -1,6 +1,6 @@
 {
   local,
-  sourceModules,
+  remote,
   cfg,
   ...
 }:
@@ -8,7 +8,7 @@
 
   imports = [
     cfg.base
-    sourceModules.disko
+    remote.disko
   ]
   ++ (with local; [
 
