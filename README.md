@@ -4,7 +4,7 @@ This git repository is an experiment to see how we can better engineer
 [NixOS](https://nixos.org/) configuration. It's a  configuration set that I run
 on all of my machines, and has undergone several complete transformations since
 its inception in 2021. Each transformation brings with it wisdom from what did
-and what didn`t work.
+and what didn't work.
 
 ## Usage
 
@@ -46,7 +46,7 @@ It's no shocker that this module pattern emerges: we're all nerds, and nerds
 famously likes to categorize things. But after some years of using NixOS, I've
 begun to strongly prefer to make each logical configuration chunk a top-level
 module. When I want a host to have hyprland, I just want to add it with
-`++ [ <modules>/hyprland.nix ]` and be done with it. I`m writing modules as
+`++ [ <modules>/hyprland.nix ]` and be done with it. I'm writing modules as
 configuration to be understood by humans, not as an exercise in taxonomy.
 
 The obvious argument here is that nested modules make it more obvious which
