@@ -112,6 +112,7 @@
             "HDMI-A-1"
             "DP-1"
             "eDP-1"
+            "eDP-2"
           ];
           margin-top = 0;
           margin-left = margin;

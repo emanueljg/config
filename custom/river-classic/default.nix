@@ -37,6 +37,9 @@ in
   config = lib.mkIf cfg.enable {
     custom.programs.river-classic.init.text = ''
       systemctl --user import-environment DISPLAY WAYLAND_DISPLAY
+      ${pkgs.dbus}/bin/dbus-update-activation-environment --systemd "DISPLAY" "WAYLAND_DISPLAY" "XDG_CURRENT_DESKTOP" "NIXOS_OZONE_WL" "XCURSOR_THEME" "XCURSOR_SIZE"
+      systemctl --user restart river-session
+
       ${builtins.readFile ./init.sh}
     '';
 
@@ -61,5 +64,13 @@ in
       binPath = "/run/current-system/sw/bin/river-start";
     };
 
+    systemd.user.targets.river-session = {
+      description = "river compositor session";
+      documentation = [ "man:systemd.special(7)" ];
+      bindsTo = [ "graphical-session.target" ];
+      wants = [ "graphical-session-pre.target" ];
+      after = [ "graphical-session-pre.target" ];
+    };
   };
+
 }
