@@ -107,6 +107,11 @@ in
         )
       );
     };
+    extraConfig = lib.mkOption {
+      default = "";
+      type = lib.types.lines;
+    };
+
   };
 
   config =
@@ -116,6 +121,7 @@ in
         ++ map configSet (flattenSettings cfg.settings)
         ++ lib.mapAttrsToList (formatDictLine "c.url.searchengines") cfg.searchEngines
         ++ lib.mapAttrsToList formatKeyBindings cfg.keyBindings
+        ++ [ cfg.extraConfig ]
       );
 
       quickmarksFile = lib.concatStringsSep "\n" (lib.mapAttrsToList formatQuickmarks cfg.quickmarks);

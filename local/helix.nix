@@ -41,6 +41,7 @@
       ];
 
       language-server = {
+        terraform-ls.command = lib.getExe pkgs.terraform-ls;
         rust-analyzer.command = lib.getExe pkgs.rust-analyzer;
         nil.command = lib.getExe pkgs.nil;
         gopls.command = lib.getExe pkgs.gopls;

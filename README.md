@@ -1,3 +1,7 @@
+**UPDATE (2026-03-22)**: The Nix ecosystem is too flake-y to integrate with, to the
+degree that it's exhausting to constantly write custom fetches for it. The
+current configuration has reverted to using flakes again. 
+
 ## Introduction
 
 This git repository is an experiment to see how we can better engineer

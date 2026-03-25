@@ -34,4 +34,6 @@
     NVD_BACKEND = "direct";
   };
 
+  hardware.nvidia.open = true;
+
 }

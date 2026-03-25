@@ -8,7 +8,7 @@
       grub = {
         enable = true;
         efiSupport = true;
-        device = "nodev";
+        device = "nodev";       # device = "nodev";
         # this is super slow
         # useOSProber = true;
         extraConfig = ''

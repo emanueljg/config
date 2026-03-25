@@ -1,0 +1,5 @@
+{
+  disko.zfs = {
+    enable = true;
+  };
+}

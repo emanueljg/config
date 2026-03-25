@@ -9,6 +9,12 @@
     custom.river-classic
   ];
 
+  # xdg.portal.config.river.default = [
+  #   "wlr"
+  #   # "gtk"
+  # ];
+  security.rtkit.enable = true;
+
   custom.programs.river-classic = {
     enable = true;
     package = pkgs.river-classic.overrideAttrs (prev: {

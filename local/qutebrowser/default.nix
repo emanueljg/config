@@ -6,6 +6,15 @@
     ./qute-nixpkgs-import.nix
   ];
 
+  xdg.mime.defaultApplications = {
+    "x-scheme-handler/http" = "qutebrowser.desktop";
+    "x-scheme-handler/https" = "qutebrowser.desktop";
+    "x-scheme-handler/about" = "qutebrowser.desktop";
+    "x-scheme-handler/unknow" = "qutebrowser.desktop";
+
+    # "image/*" = "pix.desktop";
+  };
+
   custom.programs.qutebrowser = {
     enable = true;
 
@@ -44,7 +53,7 @@
         "ew" = "jseval -q document.activeElement.blur()";
         "eb" = "spawn --userscript /config/parts/home/programs/qutebrowser/edit-quickmarks.sh"; # doesn't work as of yet
         ",d" = ''hint links spawn zsh -lic "aurta {hint-url}"'';
-        ",yy" = ''yank inline https://youtube.com/watch?{url:query}'';
+        ",yy" = "yank inline https://youtube.com/watch?{url:query}";
       };
     };
     settings = {
@@ -59,5 +68,8 @@
       "new_instance_open_target" = "window";
       "content.local_content_can_access_remote_urls" = true;
     };
+    extraConfig = ''
+      config.set('content.unknown_url_scheme_policy', 'allow-all', '*.slack.com')
+    '';
   };
 }
