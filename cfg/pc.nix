@@ -40,6 +40,7 @@
     mako
     kanshi
     lsix
+    rofi
 
     # multimedia
     mpv

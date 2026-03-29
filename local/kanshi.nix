@@ -2,6 +2,7 @@
   pkgs,
   lib,
   custom,
+  config,
   ...
 }:
 {
@@ -13,6 +14,10 @@
       # eDP-1 = "BOE 0x0B38 0x0000000";
       eDP-1 = "eDP-1";
       eDP-2 = "eDP-2";
+
+      kagari-screen = "China Star Optoelectronics Technology Co., Ltd MNG007DA6-2 0x00006006";
+
+      work-screen = "Philips Consumer Electronics Company PHL34E1C5600 UK02515018381";
 
       # front
       DP-2-home = "ASUSTek COMPUTER INC VG258 L6LMQS111772";
@@ -38,14 +43,16 @@
     {
       enable = true;
       output = {
-        ${eDP-1} = [
-          "mode"
-          "2560x1600@165.001999"
-        ];
-
-        ${eDP-2} = [
+        ${kagari-screen} = [
           "mode"
           "2560x1600@240"
+          "scale"
+          "1.5"
+        ];
+
+        ${work-screen} = [
+          "mode"
+          "3440x1440@100"
         ];
 
         ${DP-2-home} = [
@@ -62,37 +69,38 @@
       };
 
       profile = {
-        "nomad" = {
-          output."${eDP-1}" = [
-            "scale"
-            "1.5"
-          ];
-          exec = [
-            "${lib.getExe pkgs.swaybg} --image ${
-              pkgs.runCommand "lwa-1" { nativeBuildInputs = [ pkgs.imagemagick ]; } ''
-                magick ${lwa-1} +repage -crop 2560x1600+0+0 +repage $out
-              ''
-            } -m center"
-          ];
-        };
-
         "work-nomad" = {
-          output."${eDP-2}" = [
-            "scale"
-            "1.5"
-          ];
+          output.${kagari-screen} = [ ];
           exec = [
-            "${lib.getExe pkgs.swaybg} --image ${youmu}"
-
+            "${lib.getExe pkgs.swaybg} --output '${kagari-screen}' --image ${youmu}"
           ];
-          # exec = [
-          #   "${lib.getExe pkgs.swaybg} --image ${
-          #     pkgs.runCommand "lwa-1" { nativeBuildInputs = [ pkgs.imagemagick ]; } ''
-          #       magick ${lwa-1} -crop 2560x1600+2500+400 +repage $out
-          #     ''
-          #   } -m center"
-          # ];
         };
+        "work-office" = {
+          output = {
+            ${kagari-screen} = [
+              "position"
+              "0,0"
+            ];
+            ${work-screen} = [
+              "position"
+              "0,1440"
+            ];
+          };
+          exec = [
+            "${
+              (builtins.head config.custom.services.kanshi.profile."work-nomad".exec)
+            } --output '${work-screen}' --image ${
+              pkgs.runCommand "lwa-1" { nativeBuildInputs = [ pkgs.imagemagick ]; } ''
+                magick ${lwa-1} -crop 3440x1440+2000+300 +repage $out
+              ''
+            }"
+          ];
+        };
+        # exec = [
+        #   "${lib.getExe pkgs.swaybg} --image ${
+        #   } -m center"
+        # ];
+        # };
 
         "home-desk".output = {
           ${DP-1-home} = [

@@ -38,7 +38,7 @@ in
     custom.programs.river-classic.init.text = ''
       systemctl --user import-environment DISPLAY WAYLAND_DISPLAY
       ${pkgs.dbus}/bin/dbus-update-activation-environment --systemd "DISPLAY" "WAYLAND_DISPLAY" "XDG_CURRENT_DESKTOP" "NIXOS_OZONE_WL" "XCURSOR_THEME" "XCURSOR_SIZE"
-      systemctl --user restart river-session
+      systemctl --user restart river-session.target
 
       ${builtins.readFile ./init.sh}
     '';

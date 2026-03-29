@@ -36,7 +36,9 @@
     # misc. fixes
     network-wait-online-fix
 
+    # work
     _1password
+    glab
 
     stateversions."25-11"
   ]);
