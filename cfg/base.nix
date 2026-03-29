@@ -36,6 +36,8 @@
     themes
     fzf-preview
     print-colors
+    gpg-keys
+    git-init-script
   ]);
 
   _file = ./base.nix;
