@@ -17,6 +17,7 @@
 
     "rune" = "grep -rwne";
 
+    "nrs" = "s nixos-rebuild switch --flake /home/ejg/nixos";
     "nfu" = "nix flake update";
     "nfc" = "nix flake check";
   };

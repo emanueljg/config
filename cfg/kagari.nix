@@ -29,6 +29,8 @@
     # gaming
     obs
     steam
+    transmission-daemon
+    rustmission
 
     # development
     docker
